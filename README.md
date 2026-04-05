@@ -208,3 +208,11 @@ The implementation now follows the original Corne page approach more closely:
 - Upgraded role-based colours so alpha, home-row, thumbs, editing anchors, held keys, and combo states are more immediately distinguishable.
 - Redesigned selectors and toggles into pill controls with clearer active states and better focus/hover feedback.
 - Added a richer, restrained page backdrop and improved keycap tactility to make the keyboard feel more intentional while staying practical.
+
+## Practical QoL Features
+
+- Added `Learning Mode` toggle to make anchors, thumbs, home-row roles, and combo source keys easier to scan.
+- Added `Hold Emphasis` toggle to make hold-layer behaviour more explicit on tap-hold keys.
+- Added `Reset View` to return quickly to a known baseline (`Corne`, `Base`, light theme, combos off, learning off, hold emphasis off).
+- Added `Copy View Link` so current keyboard/layer/theme/toggle state can be shared or reopened directly.
+- View state is reflected in URL query parameters and restored on page load.

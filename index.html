@@ -316,6 +316,31 @@
             box-shadow: inset 0 0 0 1px rgba(217, 147, 34, 0.25);
         }
 
+        .learning-home {
+            border-width: 2px;
+            box-shadow: 0 0 0 1px rgba(111, 157, 241, 0.35), inset 0 0 0 1px rgba(111, 157, 241, 0.18);
+        }
+
+        .learning-thumb {
+            border-width: 2px;
+            box-shadow: 0 0 0 1px rgba(82, 188, 133, 0.35), inset 0 0 0 1px rgba(82, 188, 133, 0.18);
+        }
+
+        .learning-anchor {
+            border-width: 2px;
+            box-shadow: 0 0 0 1px rgba(225, 161, 77, 0.4), inset 0 0 0 1px rgba(225, 161, 77, 0.2);
+        }
+
+        .hold-emphasis {
+            border-width: 2px;
+            box-shadow: 0 0 0 1px rgba(91, 149, 239, 0.45), inset 0 0 0 1px rgba(91, 149, 239, 0.22);
+        }
+
+        .combo-key.combo-focus {
+            border-style: solid;
+            box-shadow: 0 0 0 1px rgba(217, 147, 34, 0.45), inset 0 0 0 1px rgba(217, 147, 34, 0.28);
+        }
+
         .blank-key {
             background: transparent !important;
             border: 1px dashed var(--panel-border) !important;
@@ -435,6 +460,13 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 2px 6px rgba(15, 23, 42, 0.06);
         }
 
+        .control-btn-sm {
+            padding: 0.32rem 0.62rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
         .control-btn:hover {
             background: var(--control-hover);
             border-color: var(--home-border);
@@ -501,15 +533,41 @@
                 {{ layer.name }}
             </button>
             <button
-                @click="showCombos = !showCombos"
+                @click="toggleCombos"
                 :class="['control-btn px-3 py-1.5 text-xs sm:text-sm font-semibold', showCombos ? 'layer-active' : '']"
             >
                 {{ showCombos ? 'Combos On' : 'Combos Off' }}
             </button>
         </div>
+        <div class="flex flex-wrap justify-center gap-1.5 mb-2">
+            <button
+                @click="toggleLearningMode"
+                :class="['control-btn control-btn-sm', learningMode ? 'layer-active' : '']"
+            >
+                {{ learningMode ? 'Learning On' : 'Learning Off' }}
+            </button>
+            <button
+                @click="toggleHoldEmphasis"
+                :class="['control-btn control-btn-sm', holdEmphasis ? 'layer-active' : '']"
+            >
+                {{ holdEmphasis ? 'Hold Emphasis On' : 'Hold Emphasis Off' }}
+            </button>
+            <button
+                @click="resetView"
+                class="control-btn control-btn-sm"
+            >
+                Reset View
+            </button>
+            <button
+                @click="copyStateLink"
+                class="control-btn control-btn-sm"
+            >
+                {{ copiedLink ? 'Link Copied' : 'Copy View Link' }}
+            </button>
+        </div>
         <p class="text-center text-xs mb-2.5" style="color: var(--muted-text);">Active layer: <span class="font-semibold" style="color: var(--control-text); text-transform: uppercase;">{{ currentLayer }}</span></p>
 
-        <div :class="['keyboard-shell mb-2.5', `layer-shell-${currentLayer}`]">
+        <div :class="['keyboard-shell mb-2.5', `layer-shell-${currentLayer}`, learningMode ? 'learning-mode' : '']">
             <div class="board-wrap">
                 <div class="half-board">
                     <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'left-row-' + row">
@@ -574,6 +632,7 @@
 
         <div v-show="showCombos" class="panel p-2.5 mb-1.5">
             <h3 class="font-semibold text-sm mb-2">Combos (Optional QMK-only)</h3>
+            <p class="text-xs mb-2" style="color: var(--muted-text);">Combo source keys are highlighted on the Base layer{{ learningMode ? ' with stronger emphasis in Learning Mode' : '' }}.</p>
             <div class="space-y-1.5 text-xs sm:text-sm">
                 <div v-for="combo in selectedKeyboard.combos" :key="combo.keys.join('-')" class="flex items-center justify-between rounded px-2.5 py-1.5" style="background: var(--combo-row-bg);">
                     <span class="font-mono px-2 py-0.5 rounded" style="background: var(--anchor-bg); border: 1px solid var(--anchor-border);">{{ combo.keys.join(' + ') }}</span>
@@ -1590,7 +1649,10 @@
                     currentKeyboard: "corne",
                     currentLayer: "base",
                     showCombos: false,
-                    darkMode: false
+                    darkMode: false,
+                    learningMode: false,
+                    holdEmphasis: false,
+                    copiedLink: false
                 };
             },
             computed: {
@@ -1601,6 +1663,8 @@
             async mounted() {
                 this.initTheme();
                 await this.loadConfig();
+                this.loadViewState();
+                this.syncViewState();
             },
             methods: {
                 initTheme() {
@@ -1617,6 +1681,7 @@
                 toggleTheme() {
                     this.darkMode = !this.darkMode;
                     this.applyTheme();
+                    this.syncViewState();
                 },
                 async loadConfig() {
                     try {
@@ -1636,13 +1701,91 @@
                         this.currentLayer = firstKb.layers.find((l) => l.active)?.id || "base";
                     }
                 },
+                loadViewState() {
+                    const params = new URLSearchParams(window.location.search);
+                    const keyboard = params.get("kb");
+                    const layer = params.get("layer");
+                    const theme = params.get("theme");
+                    const combos = params.get("combos");
+                    const learn = params.get("learn");
+                    const hold = params.get("hold");
+
+                    if (theme === "dark" || theme === "light") {
+                        this.darkMode = theme === "dark";
+                        this.applyTheme();
+                    }
+
+                    if (keyboard && this.config.keyboards.some((kb) => kb.id === keyboard)) {
+                        this.currentKeyboard = keyboard;
+                    }
+
+                    const kb = this.config.keyboards.find((k) => k.id === this.currentKeyboard);
+                    if (layer && kb?.layers.some((l) => l.id === layer)) {
+                        this.currentLayer = layer;
+                    }
+
+                    this.showCombos = combos === "1";
+                    this.learningMode = learn === "1";
+                    this.holdEmphasis = hold === "1";
+                },
+                syncViewState() {
+                    const params = new URLSearchParams();
+                    params.set("kb", this.currentKeyboard);
+                    params.set("layer", this.currentLayer);
+                    params.set("theme", this.darkMode ? "dark" : "light");
+                    if (this.showCombos) params.set("combos", "1");
+                    if (this.learningMode) params.set("learn", "1");
+                    if (this.holdEmphasis) params.set("hold", "1");
+
+                    const next = `${window.location.pathname}?${params.toString()}`;
+                    window.history.replaceState({}, "", next);
+                },
+                toggleCombos() {
+                    this.showCombos = !this.showCombos;
+                    this.syncViewState();
+                },
+                toggleLearningMode() {
+                    this.learningMode = !this.learningMode;
+                    this.syncViewState();
+                },
+                toggleHoldEmphasis() {
+                    this.holdEmphasis = !this.holdEmphasis;
+                    this.syncViewState();
+                },
+                resetView() {
+                    const firstKb = this.config.keyboards.find((kb) => kb.id === "corne") || this.config.keyboards[0];
+                    if (firstKb) {
+                        this.currentKeyboard = firstKb.id;
+                        this.currentLayer = "base";
+                    }
+                    this.darkMode = false;
+                    this.showCombos = false;
+                    this.learningMode = false;
+                    this.holdEmphasis = false;
+                    this.copiedLink = false;
+                    this.applyTheme();
+                    this.syncViewState();
+                },
+                copyStateLink() {
+                    this.syncViewState();
+                    const url = window.location.href;
+                    const setCopied = () => {
+                        this.copiedLink = true;
+                        setTimeout(() => { this.copiedLink = false; }, 1200);
+                    };
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(setCopied).catch(() => {});
+                    }
+                },
                 showKeyboard(keyboardId) {
                     this.currentKeyboard = keyboardId;
                     const kb = this.config.keyboards.find((k) => k.id === keyboardId);
                     this.currentLayer = kb?.layers.find((l) => l.active)?.id || "base";
+                    this.syncViewState();
                 },
                 showLayer(layerId) {
                     this.currentLayer = layerId;
+                    this.syncViewState();
                 },
                 getKeysForRow(side, row) {
                     const keys = side === "left" ? this.selectedKeyboard.keyboardLayout.leftKeys : this.selectedKeyboard.keyboardLayout.rightKeys;
@@ -1671,24 +1814,29 @@
 
                     if (key.class && key.class.includes("home-row")) {
                         classes.push("key-role-home");
+                        if (this.learningMode) classes.push("learning-home");
                     }
 
                     if (key.class && key.class.includes("thumb-key")) {
                         classes.push("key-role-thumb");
+                        if (this.learningMode) classes.push("learning-thumb");
                     }
 
                     const currentValue = (this.selectedKeyboard.layerData[this.currentLayer] || {})[key.id];
                     if (currentValue && typeof currentValue === "object" && currentValue.hold) {
                         classes.push("key-role-held");
+                        if (this.holdEmphasis || this.learningMode) classes.push("hold-emphasis");
                     }
 
                     const tapValue = typeof currentValue === "object" ? currentValue.tap : currentValue;
                     if (this.isEditingAnchor(tapValue)) {
                         classes.push("key-role-anchor");
+                        if (this.learningMode) classes.push("learning-anchor");
                     }
 
                     if (this.showCombos && this.currentLayer === "base" && key.class && key.class.includes("combo-key")) {
                         classes.push("combo-key");
+                        if (this.learningMode) classes.push("combo-focus");
                     }
 
                     if (!currentValue) {
