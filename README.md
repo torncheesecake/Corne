@@ -126,3 +126,11 @@ The implementation now follows the original Corne page approach more closely:
 - **Sweep logic:** reduced-thumb minimal setup (`Space/NAV`, `Tab/NUM`, `Enter/SYM`, `Bksp/FN`) to match Sweep constraints cleanly.
 - **Miryoku-inspired parts:** thumb-held layer access, opposite-hand workflow, compact 5-layer model.
 - **Graphite-learning adaptations:** no home-row mod overload, minimal high-value combos only, and repeatable key positions prioritised over cleverness.
+
+## Visual Fidelity Correction Pass
+
+- Added role-based key styling (alpha, home-row, thumb, hold-layer, layer-context, combo highlight) so the board is no longer flat.
+- Replaced visible dot placeholders on blank keys with quiet empty placeholders that preserve spacing and silhouette.
+- Reworked split-board presentation into one cohesive keyboard shell instead of two separate card-like panels.
+- Improved stagger/spacing and thumb-cluster placement so Corne and Sweep silhouettes read more like real hardware.
+- Tightened tap vs hold label hierarchy for quicker scanning while configuring in VIA/QMK.

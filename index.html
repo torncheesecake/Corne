@@ -7,11 +7,62 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
+        .keyboard-shell {
+            background: #f8fafc;
+            border: 1px solid #d1d5db;
+            border-radius: 0.9rem;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+            padding: 0.85rem;
+        }
+
+        .board-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.2rem;
+            align-items: start;
+        }
+
+        .half-board {
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .row-grid {
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .row-home {
+            margin-left: 0.35rem;
+        }
+
+        .row-bottom {
+            margin-left: 0.7rem;
+        }
+
+        .thumb-wrap {
+            margin-top: 0.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.8rem;
+            align-items: start;
+        }
+
+        .thumb-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+
         .key {
             min-width: 2.55rem;
             min-height: 2.55rem;
             transition: all 0.16s ease;
             font-size: 0.62rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.45rem;
+            background: #ffffff;
+            color: #0f172a;
         }
 
         @media (min-width: 768px) {
@@ -35,6 +86,46 @@
             box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.14);
         }
 
+        .key-role-alpha {
+            background: #ffffff;
+            border-color: #cbd5e1;
+        }
+
+        .key-role-home {
+            background: #f8fafc;
+            border-color: #bfdbfe;
+        }
+
+        .key-role-thumb {
+            background: #ecfdf5;
+            border-color: #86efac;
+        }
+
+        .key-role-held {
+            background: #eff6ff;
+            border-color: #93c5fd;
+        }
+
+        .key-layer-nav {
+            background: #ecfeff;
+            border-color: #a5f3fc;
+        }
+
+        .key-layer-sym {
+            background: #fff7ed;
+            border-color: #fdba74;
+        }
+
+        .key-layer-num {
+            background: #f5f3ff;
+            border-color: #c4b5fd;
+        }
+
+        .key-layer-fn {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
         .home-row {
             position: relative;
         }
@@ -53,6 +144,20 @@
 
         .combo-key {
             border: 2px dashed #f59e0b;
+        }
+
+        .blank-key {
+            background: transparent !important;
+            border: 1px dashed #e5e7eb !important;
+            box-shadow: none !important;
+            transform: none !important;
+            color: transparent;
+        }
+
+        .blank-placeholder {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
 
         .thumb-key {
@@ -80,8 +185,10 @@
 
         .mod-label {
             font-size: 0.53rem;
-            color: #6b7280;
+            color: #475569;
             margin-top: 2px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
         }
 
         .tooltip {
@@ -124,6 +231,18 @@
             visibility: visible;
             opacity: 1;
         }
+
+        @media (max-width: 1023px) {
+            .board-wrap,
+            .thumb-wrap {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .row-home,
+            .row-bottom {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 p-4 sm:p-6">
@@ -161,20 +280,45 @@
             </button>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-5">
-            <div class="bg-white p-3 sm:p-4 rounded-lg shadow">
-                <h3 class="text-center text-sm font-semibold text-gray-700 mb-3">Left</h3>
-                <div class="grid gap-1.5" :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.leftCols}, minmax(0, 1fr))` }">
+        <div class="keyboard-shell mb-5">
+            <div class="board-wrap">
+                <div class="half-board">
                     <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'left-row-' + row">
                         <div
-                            v-for="key in getKeysForRow('left', row - 1)"
-                            :key="key.id"
-                            :class="getKeyClasses(key)"
-                            v-html="getKeyContent(key.id)"
-                        ></div>
+                            class="row-grid"
+                            :class="getRowClass(row - 1)"
+                            :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.leftCols}, minmax(0, 1fr))` }"
+                        >
+                            <div
+                                v-for="key in getKeysForRow('left', row - 1)"
+                                :key="key.id"
+                                :class="getKeyClasses(key)"
+                                v-html="getKeyContent(key.id)"
+                            ></div>
+                        </div>
                     </template>
                 </div>
-                <div class="flex justify-center gap-2 mt-3">
+
+                <div class="half-board">
+                    <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'right-row-' + row">
+                        <div
+                            class="row-grid"
+                            :class="getRowClass(row - 1)"
+                            :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.rightCols}, minmax(0, 1fr))` }"
+                        >
+                            <div
+                                v-for="key in getKeysForRow('right', row - 1)"
+                                :key="key.id"
+                                :class="getKeyClasses(key)"
+                                v-html="getKeyContent(key.id)"
+                            ></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="thumb-wrap">
+                <div class="thumb-row">
                     <div
                         v-for="thumbKey in selectedKeyboard.keyboardLayout.leftThumbKeys"
                         :key="thumbKey.id"
@@ -182,21 +326,7 @@
                         v-html="getKeyContent(thumbKey.id)"
                     ></div>
                 </div>
-            </div>
-
-            <div class="bg-white p-3 sm:p-4 rounded-lg shadow">
-                <h3 class="text-center text-sm font-semibold text-gray-700 mb-3">Right</h3>
-                <div class="grid gap-1.5" :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.rightCols}, minmax(0, 1fr))` }">
-                    <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'right-row-' + row">
-                        <div
-                            v-for="key in getKeysForRow('right', row - 1)"
-                            :key="key.id"
-                            :class="getKeyClasses(key)"
-                            v-html="getKeyContent(key.id)"
-                        ></div>
-                    </template>
-                </div>
-                <div class="flex justify-center gap-2 mt-3">
+                <div class="thumb-row">
                     <div
                         v-for="thumbKey in selectedKeyboard.keyboardLayout.rightThumbKeys"
                         :key="thumbKey.id"
@@ -285,15 +415,45 @@
                     return keys.filter((key) => key.row === row);
                 },
                 getKeyClasses(key) {
-                    let classes = ["key", "rounded", "flex", "items-center", "justify-center", "bg-gray-100", "text-gray-800", "tooltip"];
+                    let classes = ["key", "rounded", "flex", "items-center", "justify-center", "tooltip", "key-role-alpha"];
+
+                    const layerRole = {
+                        nav: "key-layer-nav",
+                        sym: "key-layer-sym",
+                        num: "key-layer-num",
+                        fn: "key-layer-fn"
+                    };
+
+                    if (this.currentLayer !== "base" && layerRole[this.currentLayer]) {
+                        classes.push(layerRole[this.currentLayer]);
+                    }
 
                     if (key.class) {
-                        const baseClasses = key.class.split(" ").filter((cls) => cls !== "combo-key");
+                        const baseClasses = key.class
+                            .split(" ")
+                            .filter((cls) => cls !== "combo-key" && !cls.startsWith("bg-"));
                         classes = classes.concat(baseClasses);
+                    }
+
+                    if (key.class && key.class.includes("home-row")) {
+                        classes.push("key-role-home");
+                    }
+
+                    if (key.class && key.class.includes("thumb-key")) {
+                        classes.push("key-role-thumb");
+                    }
+
+                    const currentValue = (this.selectedKeyboard.layerData[this.currentLayer] || {})[key.id];
+                    if (currentValue && typeof currentValue === "object" && currentValue.hold) {
+                        classes.push("key-role-held");
                     }
 
                     if (this.showCombos && this.currentLayer === "base" && key.class && key.class.includes("combo-key")) {
                         classes.push("combo-key");
+                    }
+
+                    if (!currentValue) {
+                        classes.push("blank-key");
                     }
 
                     return classes;
@@ -302,7 +462,7 @@
                     const layer = this.selectedKeyboard.layerData[this.currentLayer] || {};
                     const value = layer[keyId];
                     if (!value) {
-                        return '<span class="text-xs text-gray-300">·</span>';
+                        return '<span class="blank-placeholder" aria-hidden="true"></span>';
                     }
 
                     if (typeof value === "object") {
@@ -323,6 +483,11 @@
                         <span class="text-xs sm:text-sm font-medium">${value}</span>
                         ${tooltipText ? `<div class="tooltip-text">${tooltipText}</div>` : ""}
                     `;
+                },
+                getRowClass(rowIndex) {
+                    if (rowIndex === 1) return "row-home";
+                    if (rowIndex === 2) return "row-bottom";
+                    return "";
                 },
                 getTooltipText(keyId, tap, hold) {
                     if (this.selectedKeyboard.tooltips && this.selectedKeyboard.tooltips[keyId]) {
