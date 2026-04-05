@@ -201,3 +201,10 @@ The implementation now follows the original Corne page approach more closely:
 - Improved split-board cohesion with tighter half/thumb spacing and a softer central divider cue.
 - Standardised button and text rhythm for cleaner scanning and reduced visual noise.
 - Smoothed hover/focus behaviour to stay responsive but unobtrusive during daily reference use.
+
+## Strong Visual Redesign Pass
+
+- Introduced a more product-like keyboard shell treatment with stronger silhouette, layered depth, and a clearer centre split.
+- Upgraded role-based colours so alpha, home-row, thumbs, editing anchors, held keys, and combo states are more immediately distinguishable.
+- Redesigned selectors and toggles into pill controls with clearer active states and better focus/hover feedback.
+- Added a richer, restrained page backdrop and improved keycap tactility to make the keyboard feel more intentional while staying practical.
