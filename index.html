@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miryoku-inspired Corne Graphite Layout</title>
+    <title>Graphite Split Keyboard Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         .key {
-            min-width: 2.6rem;
-            min-height: 2.6rem;
-            transition: all 0.18s ease;
+            min-width: 2.55rem;
+            min-height: 2.55rem;
+            transition: all 0.16s ease;
             font-size: 0.62rem;
         }
 
         @media (min-width: 768px) {
             .key {
-                min-width: 3.05rem;
-                min-height: 3.05rem;
+                min-width: 3.0rem;
+                min-height: 3.0rem;
                 font-size: 0.72rem;
             }
         }
 
         @media (min-width: 1024px) {
             .key {
-                min-width: 3.45rem;
-                min-height: 3.45rem;
-                font-size: 0.78rem;
+                min-width: 3.35rem;
+                min-height: 3.35rem;
+                font-size: 0.77rem;
             }
         }
 
@@ -42,7 +42,7 @@
         .home-row::before {
             content: "";
             position: absolute;
-            left: -8px;
+            left: -7px;
             top: 50%;
             transform: translateY(-50%);
             width: 3px;
@@ -56,12 +56,12 @@
         }
 
         .thumb-key {
-            min-width: 3.2rem;
+            min-width: 3.0rem;
         }
 
         @media (min-width: 768px) {
             .thumb-key {
-                min-width: 4.2rem;
+                min-width: 3.95rem;
             }
         }
 
@@ -129,11 +129,24 @@
 <body class="bg-gray-100 p-4 sm:p-6">
     <div id="app" class="max-w-7xl mx-auto">
         <h1 class="text-2xl sm:text-3xl font-bold text-center mb-2">{{ config.title }}</h1>
-        <p class="text-center text-sm sm:text-base text-gray-600 mb-6">{{ config.subtitle }}</p>
+        <p class="text-center text-sm sm:text-base text-gray-600 mb-4">{{ config.subtitle }}</p>
+
+        <div class="flex flex-wrap justify-center gap-2 mb-3">
+            <button
+                v-for="kb in config.keyboards"
+                :key="kb.id"
+                @click="showKeyboard(kb.id)"
+                :class="['px-3 py-1.5 rounded text-sm font-medium', currentKeyboard === kb.id ? 'layer-active' : 'bg-gray-300 text-gray-800 hover:bg-gray-400']"
+            >
+                {{ kb.name }}
+            </button>
+        </div>
+
+        <p class="text-center text-xs sm:text-sm text-gray-600 mb-5">{{ selectedKeyboard.description }}</p>
 
         <div class="flex flex-wrap justify-center gap-2 mb-5">
             <button
-                v-for="layer in config.layers"
+                v-for="layer in selectedKeyboard.layers"
                 :key="layer.id"
                 @click="showLayer(layer.id)"
                 :class="['px-3 py-1.5 rounded text-sm font-medium', currentLayer === layer.id ? 'layer-active' : 'bg-gray-300 text-gray-800 hover:bg-gray-400']"
@@ -151,8 +164,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-5">
             <div class="bg-white p-3 sm:p-4 rounded-lg shadow">
                 <h3 class="text-center text-sm font-semibold text-gray-700 mb-3">Left</h3>
-                <div class="grid grid-cols-6 gap-1.5">
-                    <template v-for="row in 3" :key="'left-row-' + row">
+                <div class="grid gap-1.5" :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.leftCols}, minmax(0, 1fr))` }">
+                    <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'left-row-' + row">
                         <div
                             v-for="key in getKeysForRow('left', row - 1)"
                             :key="key.id"
@@ -163,7 +176,7 @@
                 </div>
                 <div class="flex justify-center gap-2 mt-3">
                     <div
-                        v-for="thumbKey in config.keyboardLayout.leftThumbKeys"
+                        v-for="thumbKey in selectedKeyboard.keyboardLayout.leftThumbKeys"
                         :key="thumbKey.id"
                         :class="getKeyClasses(thumbKey)"
                         v-html="getKeyContent(thumbKey.id)"
@@ -173,8 +186,8 @@
 
             <div class="bg-white p-3 sm:p-4 rounded-lg shadow">
                 <h3 class="text-center text-sm font-semibold text-gray-700 mb-3">Right</h3>
-                <div class="grid grid-cols-6 gap-1.5">
-                    <template v-for="row in 3" :key="'right-row-' + row">
+                <div class="grid gap-1.5" :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.rightCols}, minmax(0, 1fr))` }">
+                    <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'right-row-' + row">
                         <div
                             v-for="key in getKeysForRow('right', row - 1)"
                             :key="key.id"
@@ -185,7 +198,7 @@
                 </div>
                 <div class="flex justify-center gap-2 mt-3">
                     <div
-                        v-for="thumbKey in config.keyboardLayout.rightThumbKeys"
+                        v-for="thumbKey in selectedKeyboard.keyboardLayout.rightThumbKeys"
                         :key="thumbKey.id"
                         :class="getKeyClasses(thumbKey)"
                         v-html="getKeyContent(thumbKey.id)"
@@ -196,14 +209,14 @@
 
         <div class="bg-white p-4 rounded-lg shadow mb-4">
             <h3 class="font-semibold mb-2">Core Behaviour</h3>
-            <p class="text-sm text-gray-700 mb-1"><strong>VIA-safe core:</strong> Base/Nav/Sym/Num/Fn with thumb hold-layers.</p>
-            <p class="text-sm text-gray-700"><strong>Optional QMK-only:</strong> Minimal combos, including Caps Word.</p>
+            <p class="text-sm text-gray-700 mb-1"><strong>VIA-safe core:</strong> {{ selectedKeyboard.viaSafe }}</p>
+            <p class="text-sm text-gray-700"><strong>Optional QMK-only:</strong> {{ selectedKeyboard.qmkOnly }}</p>
         </div>
 
         <div v-show="showCombos" class="bg-white p-4 rounded-lg shadow mb-4">
             <h3 class="font-semibold mb-3">Combos (Optional QMK-only)</h3>
             <div class="space-y-2 text-sm">
-                <div v-for="combo in config.combos" :key="combo.keys.join('-')" class="flex items-center justify-between bg-gray-50 rounded px-3 py-2">
+                <div v-for="combo in selectedKeyboard.combos" :key="combo.keys.join('-')" class="flex items-center justify-between bg-gray-50 rounded px-3 py-2">
                     <span class="font-mono bg-amber-100 px-2 py-1 rounded">{{ combo.keys.join(' + ') }}</span>
                     <span class="text-gray-500">→</span>
                     <span class="font-medium">{{ combo.output }}</span>
@@ -212,19 +225,10 @@
             </div>
             <p class="mt-3 text-xs text-gray-500">Kept intentionally minimal for Graphite learning and daily use.</p>
         </div>
-
-        <div class="bg-white p-4 rounded-lg shadow">
-            <h3 class="font-semibold mb-2">Layer Logic</h3>
-            <ul class="text-sm text-gray-700 space-y-1">
-                <li>• Left thumbs: Ctrl, Space (hold NAV), Tab (hold NUM)</li>
-                <li>• Right thumbs: Enter (hold SYM), Backspace (hold FN), Shift</li>
-                <li>• Miryoku-inspired opposite-hand access, simplified for Graphite learning</li>
-            </ul>
-        </div>
     </div>
 
     <script>
-        const EMBEDDED_CONFIG = {"title":"Miryoku-inspired Corne Graphite Layout","subtitle":"Corne v3 Choc (42-key) \u2022 Graphite base \u2022 Miryoku-inspired daily-use layers","layers":[{"id":"base","name":"Base","active":true},{"id":"nav","name":"Nav","active":false},{"id":"sym","name":"Sym","active":false},{"id":"num","name":"Num","active":false},{"id":"fn","name":"Fn","active":false}],"keyboardLayout":{"leftKeys":[{"id":"L00","row":0,"class":"bg-gray-100"},{"id":"L01","row":0,"class":"bg-gray-100"},{"id":"L02","row":0,"class":"bg-gray-100"},{"id":"L03","row":0,"class":"bg-gray-100"},{"id":"L04","row":0,"class":"bg-gray-100"},{"id":"L05","row":0,"class":"bg-gray-100"},{"id":"L10","row":1,"class":"bg-gray-100 home-row"},{"id":"L11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"L12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"L13","row":1,"class":"bg-gray-100 home-row"},{"id":"L14","row":1,"class":"bg-gray-100 home-row"},{"id":"L15","row":1,"class":"bg-gray-100 home-row"},{"id":"L20","row":2,"class":"bg-gray-100"},{"id":"L21","row":2,"class":"bg-gray-100"},{"id":"L22","row":2,"class":"bg-gray-100"},{"id":"L23","row":2,"class":"bg-gray-100"},{"id":"L24","row":2,"class":"bg-gray-100"},{"id":"L25","row":2,"class":"bg-gray-100"}],"rightKeys":[{"id":"R00","row":0,"class":"bg-gray-100"},{"id":"R01","row":0,"class":"bg-gray-100"},{"id":"R02","row":0,"class":"bg-gray-100"},{"id":"R03","row":0,"class":"bg-gray-100"},{"id":"R04","row":0,"class":"bg-gray-100"},{"id":"R05","row":0,"class":"bg-gray-100"},{"id":"R10","row":1,"class":"bg-gray-100 home-row"},{"id":"R11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R13","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R14","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R15","row":1,"class":"bg-gray-100 home-row"},{"id":"R20","row":2,"class":"bg-gray-100"},{"id":"R21","row":2,"class":"bg-gray-100"},{"id":"R22","row":2,"class":"bg-gray-100"},{"id":"R23","row":2,"class":"bg-gray-100"},{"id":"R24","row":2,"class":"bg-gray-100"},{"id":"R25","row":2,"class":"bg-gray-100"}],"leftThumbKeys":[{"id":"LT0","class":"thumb-key bg-green-100"},{"id":"LT1","class":"thumb-key bg-green-100 combo-key"},{"id":"LT2","class":"thumb-key bg-green-100"}],"rightThumbKeys":[{"id":"RT0","class":"thumb-key bg-green-100 combo-key"},{"id":"RT1","class":"thumb-key bg-green-100"},{"id":"RT2","class":"thumb-key bg-green-100"}]},"layerData":{"base":{"L00":"","L01":"B","L02":"L","L03":"D","L04":"W","L05":"Z","L10":"","L11":"N","L12":"R","L13":"T","L14":"S","L15":"G","L20":"","L21":"Q","L22":"X","L23":"M","L24":"C","L25":"V","R00":"F","R01":"O","R02":"U","R03":"J","R04":"","R05":"","R10":"Y","R11":"H","R12":"A","R13":"E","R14":"I","R15":"","R20":"K","R21":"P","R22":".","R23":"'","R24":"/","R25":"","LT0":{"tap":"Ctrl"},"LT1":{"tap":"Space","hold":"NAV"},"LT2":{"tap":"Tab","hold":"NUM"},"RT0":{"tap":"Enter","hold":"SYM"},"RT1":{"tap":"Bksp","hold":"FN"},"RT2":{"tap":"Shift"}},"nav":{"L00":"Esc","L01":"Tab","L02":"","L03":"","L04":"","L05":"","L10":"","L11":"","L12":"","L13":"","L14":"","L15":"","L20":"","L21":"","L22":"","L23":"","L24":"","L25":"","R00":"","R01":"Home","R02":"PgUp","R03":"PgDn","R04":"End","R05":"Delete","R10":"","R11":"Left","R12":"Down","R13":"Up","R14":"Right","R15":"","R20":"","R21":"","R22":"","R23":"","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"sym":{"L00":"!","L01":"@","L02":"#","L03":"$","L04":"%","L05":"^","L10":"[","L11":"]","L12":"{","L13":"}","L14":"<","L15":">","L20":"=","L21":"+","L22":"-","L23":"_","L24":"","L25":"","R00":"&","R01":"*","R02":"(","R03":")","R04":"\\","R05":"|","R10":"'","R11":"\"","R12":"`","R13":"~","R14":":","R15":";","R20":"/","R21":"?","R22":",","R23":".","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"num":{"L00":"","L01":"","L02":"","L03":"","L04":"","L05":"","L10":"","L11":"+","L12":"-","L13":"*","L14":"/","L15":"","L20":"","L21":"=","L22":"","L23":"","L24":"","L25":"","R00":"","R01":"7","R02":"8","R03":"9","R04":"","R05":"","R10":"","R11":"4","R12":"5","R13":"6","R14":"","R15":"","R20":"","R21":"1","R22":"2","R23":"3","R24":"0","R25":".","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"fn":{"L00":"F1","L01":"F2","L02":"F3","L03":"F4","L04":"F5","L05":"F6","L10":"","L11":"","L12":"","L13":"","L14":"","L15":"","L20":"","L21":"","L22":"","L23":"","L24":"","L25":"","R00":"F7","R01":"F8","R02":"F9","R03":"F10","R04":"F11","R05":"F12","R10":"","R11":"Vol-","R12":"Mute","R13":"Vol+","R14":"","R15":"","R20":"","R21":"Prev","R22":"Play","R23":"Next","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""}},"tooltips":{"LT1":"Space tap, NAV when held (VIA-safe layer key)","LT2":"Tab tap, NUM when held (VIA-safe layer key)","RT0":"Enter tap, SYM when held (VIA-safe layer key)","RT1":"Bksp tap, FN when held (VIA-safe layer key)","L11":"Combo source for Esc (N + R) in base layer","L12":"Combo source for Esc (N + R) in base layer","R12":"Combo source for Tab (H + A) in base layer","R13":"Combo source for Delete (E + I) in base layer","R14":"Combo source for Delete (E + I) in base layer"},"combos":[{"keys":["N","R"],"output":"Esc","note":"Quick cancel"},{"keys":["H","A"],"output":"Tab","note":"Focus switch"},{"keys":["E","I"],"output":"Delete","note":"Forward delete"},{"keys":["Space","Enter"],"output":"Caps Word (QMK)","note":"Optional coding helper"}]};
+        const EMBEDDED_CONFIG = {"title":"Graphite Split Keyboard Reference","subtitle":"Corne + Ferris Sweep, static QMK-focused layout guide","keyboards":[{"id":"corne","name":"Corne","description":"Corne v3 Choc (42-key, 3x6 + 3) with Miryoku-inspired daily-use thumbs","viaSafe":"Base/Nav/Sym/Num/Fn layers and thumb hold-layer model.","qmkOnly":"Minimal combos and Caps Word combo.","layers":[{"id":"base","name":"Base","active":true},{"id":"nav","name":"Nav","active":false},{"id":"sym","name":"Sym","active":false},{"id":"num","name":"Num","active":false},{"id":"fn","name":"Fn","active":false}],"keyboardLayout":{"rows":3,"leftCols":6,"rightCols":6,"leftKeys":[{"id":"L00","row":0,"class":"bg-gray-100"},{"id":"L01","row":0,"class":"bg-gray-100"},{"id":"L02","row":0,"class":"bg-gray-100"},{"id":"L03","row":0,"class":"bg-gray-100"},{"id":"L04","row":0,"class":"bg-gray-100"},{"id":"L05","row":0,"class":"bg-gray-100"},{"id":"L10","row":1,"class":"bg-gray-100 home-row"},{"id":"L11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"L12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"L13","row":1,"class":"bg-gray-100 home-row"},{"id":"L14","row":1,"class":"bg-gray-100 home-row"},{"id":"L15","row":1,"class":"bg-gray-100 home-row"},{"id":"L20","row":2,"class":"bg-gray-100"},{"id":"L21","row":2,"class":"bg-gray-100"},{"id":"L22","row":2,"class":"bg-gray-100"},{"id":"L23","row":2,"class":"bg-gray-100"},{"id":"L24","row":2,"class":"bg-gray-100"},{"id":"L25","row":2,"class":"bg-gray-100"}],"rightKeys":[{"id":"R00","row":0,"class":"bg-gray-100"},{"id":"R01","row":0,"class":"bg-gray-100"},{"id":"R02","row":0,"class":"bg-gray-100"},{"id":"R03","row":0,"class":"bg-gray-100"},{"id":"R04","row":0,"class":"bg-gray-100"},{"id":"R05","row":0,"class":"bg-gray-100"},{"id":"R10","row":1,"class":"bg-gray-100 home-row"},{"id":"R11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R13","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R14","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"R15","row":1,"class":"bg-gray-100 home-row"},{"id":"R20","row":2,"class":"bg-gray-100"},{"id":"R21","row":2,"class":"bg-gray-100"},{"id":"R22","row":2,"class":"bg-gray-100"},{"id":"R23","row":2,"class":"bg-gray-100"},{"id":"R24","row":2,"class":"bg-gray-100"},{"id":"R25","row":2,"class":"bg-gray-100"}],"leftThumbKeys":[{"id":"LT0","class":"thumb-key bg-green-100"},{"id":"LT1","class":"thumb-key bg-green-100 combo-key"},{"id":"LT2","class":"thumb-key bg-green-100"}],"rightThumbKeys":[{"id":"RT0","class":"thumb-key bg-green-100 combo-key"},{"id":"RT1","class":"thumb-key bg-green-100"},{"id":"RT2","class":"thumb-key bg-green-100"}]},"layerData":{"base":{"L00":"","L01":"B","L02":"L","L03":"D","L04":"W","L05":"Z","L10":"","L11":"N","L12":"R","L13":"T","L14":"S","L15":"G","L20":"","L21":"Q","L22":"X","L23":"M","L24":"C","L25":"V","R00":"F","R01":"O","R02":"U","R03":"J","R04":"","R05":"","R10":"Y","R11":"H","R12":"A","R13":"E","R14":"I","R15":"","R20":"K","R21":"P","R22":".","R23":"'","R24":"/","R25":"","LT0":{"tap":"Ctrl"},"LT1":{"tap":"Space","hold":"NAV"},"LT2":{"tap":"Tab","hold":"NUM"},"RT0":{"tap":"Enter","hold":"SYM"},"RT1":{"tap":"Bksp","hold":"FN"},"RT2":{"tap":"Shift"}},"nav":{"L00":"Esc","L01":"Tab","L02":"","L03":"","L04":"","L05":"","L10":"","L11":"","L12":"","L13":"","L14":"","L15":"","L20":"","L21":"","L22":"","L23":"","L24":"","L25":"","R00":"","R01":"Home","R02":"PgUp","R03":"PgDn","R04":"End","R05":"Delete","R10":"","R11":"Left","R12":"Down","R13":"Up","R14":"Right","R15":"","R20":"","R21":"","R22":"","R23":"","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"sym":{"L00":"!","L01":"@","L02":"#","L03":"$","L04":"%","L05":"^","L10":"[","L11":"]","L12":"{","L13":"}","L14":"<","L15":">","L20":"=","L21":"+","L22":"-","L23":"_","L24":"","L25":"","R00":"&","R01":"*","R02":"(","R03":")","R04":"\\","R05":"|","R10":"'","R11":"\"","R12":"`","R13":"~","R14":":","R15":";","R20":"/","R21":"?","R22":",","R23":".","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"num":{"L00":"","L01":"","L02":"","L03":"","L04":"","L05":"","L10":"","L11":"+","L12":"-","L13":"*","L14":"/","L15":"","L20":"","L21":"=","L22":"","L23":"","L24":"","L25":"","R00":"","R01":"7","R02":"8","R03":"9","R04":"","R05":"","R10":"","R11":"4","R12":"5","R13":"6","R14":"","R15":"","R20":"","R21":"1","R22":"2","R23":"3","R24":"0","R25":".","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""},"fn":{"L00":"F1","L01":"F2","L02":"F3","L03":"F4","L04":"F5","L05":"F6","L10":"","L11":"","L12":"","L13":"","L14":"","L15":"","L20":"","L21":"","L22":"","L23":"","L24":"","L25":"","R00":"F7","R01":"F8","R02":"F9","R03":"F10","R04":"F11","R05":"F12","R10":"","R11":"Vol-","R12":"Mute","R13":"Vol+","R14":"","R15":"","R20":"","R21":"Prev","R22":"Play","R23":"Next","R24":"","R25":"","LT0":"","LT1":"","LT2":"","RT0":"","RT1":"","RT2":""}},"tooltips":{"LT1":"Space tap, NAV when held","LT2":"Tab tap, NUM when held","RT0":"Enter tap, SYM when held","RT1":"Bksp tap, FN when held"},"combos":[{"keys":["N","R"],"output":"Esc","note":"Quick cancel"},{"keys":["H","A"],"output":"Tab","note":"Focus switch"},{"keys":["E","I"],"output":"Delete","note":"Forward delete"},{"keys":["Space","Enter"],"output":"Caps Word (QMK)","note":"Optional coding helper"}]},{"id":"sweep","name":"Ferris Sweep","description":"Ferris Sweep (34-key, 3x5 + 2) with compact Graphite-focused layers","viaSafe":"Base/Nav/Sym/Num/Fn layers and thumb hold-layer model.","qmkOnly":"Minimal combos and Caps Word combo.","layers":[{"id":"base","name":"Base","active":true},{"id":"nav","name":"Nav","active":false},{"id":"sym","name":"Sym","active":false},{"id":"num","name":"Num","active":false},{"id":"fn","name":"Fn","active":false}],"keyboardLayout":{"rows":3,"leftCols":5,"rightCols":5,"leftKeys":[{"id":"SL00","row":0,"class":"bg-gray-100"},{"id":"SL01","row":0,"class":"bg-gray-100"},{"id":"SL02","row":0,"class":"bg-gray-100"},{"id":"SL03","row":0,"class":"bg-gray-100"},{"id":"SL04","row":0,"class":"bg-gray-100"},{"id":"SL10","row":1,"class":"bg-gray-100 home-row"},{"id":"SL11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SL12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SL13","row":1,"class":"bg-gray-100 home-row"},{"id":"SL14","row":1,"class":"bg-gray-100 home-row"},{"id":"SL20","row":2,"class":"bg-gray-100"},{"id":"SL21","row":2,"class":"bg-gray-100"},{"id":"SL22","row":2,"class":"bg-gray-100"},{"id":"SL23","row":2,"class":"bg-gray-100"},{"id":"SL24","row":2,"class":"bg-gray-100"}],"rightKeys":[{"id":"SR00","row":0,"class":"bg-gray-100"},{"id":"SR01","row":0,"class":"bg-gray-100"},{"id":"SR02","row":0,"class":"bg-gray-100"},{"id":"SR03","row":0,"class":"bg-gray-100"},{"id":"SR04","row":0,"class":"bg-gray-100"},{"id":"SR10","row":1,"class":"bg-gray-100 home-row"},{"id":"SR11","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SR12","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SR13","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SR14","row":1,"class":"bg-gray-100 home-row combo-key"},{"id":"SR20","row":2,"class":"bg-gray-100"},{"id":"SR21","row":2,"class":"bg-gray-100"},{"id":"SR22","row":2,"class":"bg-gray-100"},{"id":"SR23","row":2,"class":"bg-gray-100"},{"id":"SR24","row":2,"class":"bg-gray-100"}],"leftThumbKeys":[{"id":"SLT0","class":"thumb-key bg-green-100 combo-key"},{"id":"SLT1","class":"thumb-key bg-green-100"}],"rightThumbKeys":[{"id":"SRT0","class":"thumb-key bg-green-100 combo-key"},{"id":"SRT1","class":"thumb-key bg-green-100"}]},"layerData":{"base":{"SL00":"B","SL01":"L","SL02":"D","SL03":"W","SL04":"Z","SL10":"N","SL11":"R","SL12":"T","SL13":"S","SL14":"G","SL20":"Q","SL21":"X","SL22":"M","SL23":"C","SL24":"V","SR00":"F","SR01":"O","SR02":"U","SR03":"J","SR04":";","SR10":"Y","SR11":"H","SR12":"A","SR13":"E","SR14":"I","SR20":"K","SR21":"P","SR22":".","SR23":"'","SR24":"/","SLT0":{"tap":"Space","hold":"NAV"},"SLT1":{"tap":"Tab","hold":"NUM"},"SRT0":{"tap":"Enter","hold":"SYM"},"SRT1":{"tap":"Bksp","hold":"FN"}},"nav":{"SL00":"Esc","SL01":"Tab","SL02":"","SL03":"","SL04":"","SL10":"","SL11":"","SL12":"","SL13":"","SL14":"","SL20":"","SL21":"","SL22":"","SL23":"","SL24":"","SR00":"Home","SR01":"PgUp","SR02":"PgDn","SR03":"End","SR04":"Delete","SR10":"Left","SR11":"Down","SR12":"Up","SR13":"Right","SR14":"","SR20":"","SR21":"","SR22":"","SR23":"","SR24":"","SLT0":"","SLT1":"","SRT0":"","SRT1":""},"sym":{"SL00":"!","SL01":"@","SL02":"#","SL03":"$","SL04":"%","SL10":"[","SL11":"]","SL12":"{","SL13":"}","SL14":"<","SL20":"=","SL21":"+","SL22":"-","SL23":"_","SL24":">","SR00":"^","SR01":"&","SR02":"*","SR03":"(","SR04":")","SR10":"\\","SR11":"|","SR12":":","SR13":";","SR14":"\"","SR20":"/","SR21":"?","SR22":",","SR23":".","SR24":"'","SLT0":"","SLT1":"","SRT0":"","SRT1":""},"num":{"SL00":"","SL01":"+","SL02":"-","SL03":"*","SL04":"/","SL10":"","SL11":"=","SL12":"","SL13":"","SL14":"","SL20":"","SL21":"","SL22":"","SL23":"","SL24":"","SR00":"7","SR01":"8","SR02":"9","SR03":"","SR04":"","SR10":"4","SR11":"5","SR12":"6","SR13":"","SR14":"","SR20":"1","SR21":"2","SR22":"3","SR23":"0","SR24":".","SLT0":"","SLT1":"","SRT0":"","SRT1":""},"fn":{"SL00":"F1","SL01":"F2","SL02":"F3","SL03":"F4","SL04":"F5","SL10":"F6","SL11":"","SL12":"","SL13":"","SL14":"","SL20":"","SL21":"","SL22":"","SL23":"","SL24":"","SR00":"F7","SR01":"F8","SR02":"F9","SR03":"F10","SR04":"F11","SR10":"F12","SR11":"Vol-","SR12":"Mute","SR13":"Vol+","SR14":"","SR20":"Prev","SR21":"Play","SR22":"Next","SR23":"","SR24":"","SLT0":"","SLT1":"","SRT0":"","SRT1":""}},"tooltips":{"SLT0":"Space tap, NAV when held","SLT1":"Tab tap, NUM when held","SRT0":"Enter tap, SYM when held","SRT1":"Bksp tap, FN when held"},"combos":[{"keys":["R","T"],"output":"Esc","note":"Quick cancel"},{"keys":["H","A"],"output":"Tab","note":"Focus switch"},{"keys":["E","I"],"output":"Delete","note":"Forward delete"},{"keys":["Space","Enter"],"output":"Caps Word (QMK)","note":"Optional coding helper"}]}]};
 
         const { createApp } = Vue;
 
@@ -232,22 +236,19 @@
             data() {
                 return {
                     config: {
-                        title: 'Loading...',
-                        subtitle: 'Loading layout...',
-                        layers: [],
-                        keyboardLayout: {
-                            leftKeys: [],
-                            rightKeys: [],
-                            leftThumbKeys: [],
-                            rightThumbKeys: []
-                        },
-                        layerData: {},
-                        tooltips: {},
-                        combos: []
+                        title: "Loading...",
+                        subtitle: "Loading layout...",
+                        keyboards: []
                     },
-                    currentLayer: 'base',
+                    currentKeyboard: "corne",
+                    currentLayer: "base",
                     showCombos: false
                 };
+            },
+            computed: {
+                selectedKeyboard() {
+                    return this.config.keyboards.find((kb) => kb.id === this.currentKeyboard) || { keyboardLayout: { rows: 3, leftCols: 6, rightCols: 6, leftKeys: [], rightKeys: [], leftThumbKeys: [], rightThumbKeys: [] }, layers: [], layerData: {}, tooltips: {}, combos: [], viaSafe: "", qmkOnly: "", description: "" };
+                }
             },
             async mounted() {
                 await this.loadConfig();
@@ -255,68 +256,77 @@
             methods: {
                 async loadConfig() {
                     try {
-                        const response = await fetch('./app-corne-graphite.json');
+                        const response = await fetch("./app-keyboards-graphite.json");
                         if (!response.ok) {
                             throw new Error(`HTTP ${response.status}`);
                         }
                         this.config = await response.json();
                     } catch (error) {
-                        console.warn('Fetch failed, using embedded config fallback:', error);
+                        console.warn("Fetch failed, using embedded config fallback:", error);
                         this.config = EMBEDDED_CONFIG;
                     }
 
-                    this.currentLayer = this.config.layers.find((l) => l.active)?.id || 'base';
+                    const firstKb = this.config.keyboards[0];
+                    if (firstKb) {
+                        this.currentKeyboard = firstKb.id;
+                        this.currentLayer = firstKb.layers.find((l) => l.active)?.id || "base";
+                    }
+                },
+                showKeyboard(keyboardId) {
+                    this.currentKeyboard = keyboardId;
+                    const kb = this.config.keyboards.find((k) => k.id === keyboardId);
+                    this.currentLayer = kb?.layers.find((l) => l.active)?.id || "base";
                 },
                 showLayer(layerId) {
                     this.currentLayer = layerId;
                 },
                 getKeysForRow(side, row) {
-                    const keys = side === 'left' ? this.config.keyboardLayout.leftKeys : this.config.keyboardLayout.rightKeys;
+                    const keys = side === "left" ? this.selectedKeyboard.keyboardLayout.leftKeys : this.selectedKeyboard.keyboardLayout.rightKeys;
                     return keys.filter((key) => key.row === row);
                 },
                 getKeyClasses(key) {
-                    let classes = ['key', 'rounded', 'flex', 'items-center', 'justify-center', 'bg-gray-100', 'text-gray-800', 'tooltip'];
+                    let classes = ["key", "rounded", "flex", "items-center", "justify-center", "bg-gray-100", "text-gray-800", "tooltip"];
 
                     if (key.class) {
-                        const baseClasses = key.class.split(' ').filter((cls) => cls !== 'combo-key');
+                        const baseClasses = key.class.split(" ").filter((cls) => cls !== "combo-key");
                         classes = classes.concat(baseClasses);
                     }
 
-                    if (this.showCombos && this.currentLayer === 'base' && key.class && key.class.includes('combo-key')) {
-                        classes.push('combo-key');
+                    if (this.showCombos && this.currentLayer === "base" && key.class && key.class.includes("combo-key")) {
+                        classes.push("combo-key");
                     }
 
                     return classes;
                 },
                 getKeyContent(keyId) {
-                    const layer = this.config.layerData[this.currentLayer] || {};
+                    const layer = this.selectedKeyboard.layerData[this.currentLayer] || {};
                     const value = layer[keyId];
                     if (!value) {
                         return '<span class="text-xs text-gray-300">·</span>';
                     }
 
-                    if (typeof value === 'object') {
-                        const tap = value.tap || '';
-                        const hold = value.hold || '';
+                    if (typeof value === "object") {
+                        const tap = value.tap || "";
+                        const hold = value.hold || "";
                         const tooltipText = this.getTooltipText(keyId, tap, hold);
                         return `
                             <div class="key-label">
                                 <span class="font-semibold">${tap}</span>
-                                ${hold ? `<span class="mod-label">hold ${hold}</span>` : ''}
+                                ${hold ? `<span class="mod-label">hold ${hold}</span>` : ""}
                             </div>
-                            ${tooltipText ? `<div class="tooltip-text">${tooltipText}</div>` : ''}
+                            ${tooltipText ? `<div class="tooltip-text">${tooltipText}</div>` : ""}
                         `;
                     }
 
-                    const tooltipText = this.getTooltipText(keyId, value, '');
+                    const tooltipText = this.getTooltipText(keyId, value, "");
                     return `
                         <span class="text-xs sm:text-sm font-medium">${value}</span>
-                        ${tooltipText ? `<div class="tooltip-text">${tooltipText}</div>` : ''}
+                        ${tooltipText ? `<div class="tooltip-text">${tooltipText}</div>` : ""}
                     `;
                 },
                 getTooltipText(keyId, tap, hold) {
-                    if (this.config.tooltips && this.config.tooltips[keyId]) {
-                        return this.config.tooltips[keyId];
+                    if (this.selectedKeyboard.tooltips && this.selectedKeyboard.tooltips[keyId]) {
+                        return this.selectedKeyboard.tooltips[keyId];
                     }
 
                     if (hold) {
@@ -324,23 +334,23 @@
                     }
 
                     const descriptions = {
-                        Esc: 'Escape',
-                        Tab: 'Tab',
-                        Delete: 'Forward delete',
-                        Home: 'Move to line start',
-                        End: 'Move to line end',
-                        PgUp: 'Page up',
-                        PgDn: 'Page down',
-                        Left: 'Arrow left',
-                        Right: 'Arrow right',
-                        Up: 'Arrow up',
-                        Down: 'Arrow down'
+                        Esc: "Escape",
+                        Tab: "Tab",
+                        Delete: "Forward delete",
+                        Home: "Move to line start",
+                        End: "Move to line end",
+                        PgUp: "Page up",
+                        PgDn: "Page down",
+                        Left: "Arrow left",
+                        Right: "Arrow right",
+                        Up: "Arrow up",
+                        Down: "Arrow down"
                     };
 
                     return descriptions[tap] || `${tap} key`;
                 }
             }
-        }).mount('#app');
+        }).mount("#app");
     </script>
 </body>
 </html>

@@ -1,44 +1,60 @@
-# Corne Graphite Layout Site
+# Graphite Split Layout Site
 
-Static GitHub Pages-ready keyboard layout reference for **Corne v3 Choc (42-key, 3x6 + 3)** using **Graphite** alphas and Miryoku-style layer organisation.
+Static GitHub Pages-ready keyboard layout reference for **Corne v3 Choc** and **Ferris Sweep** using **Graphite** alphas with Miryoku-inspired layer organisation.
 
 ## Site Structure
 
 - `index.html`: Main page, using Vue + Tailwind CDN with inline page styles
-- `app-corne-graphite.json`: Main editable source for keys, layers, tooltips, and combos
+- `app-keyboards-graphite.json`: Main editable source for both keyboard modes
 - `assets/`: Optional folder for future static assets
+
+## Supported Keyboards
+
+- `Corne v3 Choc` (3x6 + 3)
+- `Ferris Sweep` (3x5 + 2)
+
+Both use Graphite as the alpha basis but keep board-specific geometry and practical layer behaviour.
 
 ## Chosen Thumb Strategy (Miryoku-inspired, practical)
 
-Base thumbs are tuned for daily use first, layer access second:
+Corne thumbs:
 
 - Left: `Ctrl`, `Space (hold NAV)`, `Tab (hold NUM)`
 - Right: `Enter (hold SYM)`, `Backspace (hold FN)`, `Shift`
 
-Why this strategy:
+Sweep thumbs:
 
-- Keeps highest-frequency actions on thumbs: Space, Enter, Backspace
-- Keeps layer entry on thumbs in a Miryoku-style hold pattern
-- Avoids overloading home row while you are still learning Graphite
-- Retains Ctrl/Shift where they are immediately useful
+- Left: `Space (hold NAV)`, `Tab (hold NUM)`
+- Right: `Enter (hold SYM)`, `Backspace (hold FN)`
 
-## Miryoku-style Adaptations for Graphite on Corne
+Why:
+
+- Keeps highest-frequency actions on thumbs first (Space, Enter, Backspace)
+- Preserves Miryoku-style hold layers without overloading learning complexity
+- Keeps Corne richer for daily use while Sweep stays minimal and realistic
+
+## Miryoku-style Adaptations for Graphite
 
 - Miryoku-like layer model: `Base`, `Nav`, `Sym`, `Num`, `Fn`
-- Graphite alpha positions are fixed on Base
+- Graphite alpha positions are fixed on each board's Base layer
 - Layers are practical rather than maximal
 - Minimal combos only, focused on real editing/navigation gains
 
 ## VIA-safe vs QMK-only
 
-VIA-safe (core):
+Corne VIA-safe (core):
 
-- Base/Nav/Sym/Num/Fn layer layouts
-- Simple layer key approach represented in the visual reference
+- Base/Nav/Sym/Num/Fn
+- Thumb holds: `Space/NAV`, `Tab/NUM`, `Enter/SYM`, `Bksp/FN`
 
-Optional QMK-only enhancements:
+Sweep VIA-safe (core):
 
-- Combo behaviours
+- Base/Nav/Sym/Num/Fn
+- Thumb holds: `Space/NAV`, `Tab/NUM`, `Enter/SYM`, `Bksp/FN`
+
+Optional QMK-only enhancements (both boards):
+
+- Minimal combo behaviours
 - Caps Word combo
 
 ## Publishing to GitHub Pages
@@ -67,11 +83,11 @@ Note: `index.html` now includes an embedded JSON fallback, so direct `file://` o
 
 ## Editing the Layout
 
-Most edits should go in `app-corne-graphite.json`:
+Most edits should go in `app-keyboards-graphite.json`:
 
-- `layerData.base/nav/sym/num/fn` for layer content
-- `keyboardLayout.leftThumbKeys/rightThumbKeys` and base thumb values for thumb behaviour
-- `combos` and `tooltips` for optional QMK combo reference
+- `keyboards[].keyboardLayout` for board geometry
+- `keyboards[].layerData.base/nav/sym/num/fn` for layer content
+- `keyboards[].combos` and `keyboards[].tooltips` for optional QMK combo reference
 
 `index.html` follows the original Corne page model (Vue rendering + JSON fetch), so most layout changes stay data-only.
 
@@ -106,7 +122,7 @@ The implementation now follows the original Corne page approach more closely:
 
 ## Final Layout Logic (Current)
 
-- **Thumb logic:** `Ctrl`, `Space/NAV`, `Tab/NUM` on left and `Enter/SYM`, `Bksp/FN`, `Shift` on right for high-frequency actions first, layers second.
-- **Layer logic:** Base for Graphite learning, Nav for movement/editing, Sym for punctuation/operators, Num as right-hand numpad pattern with light left-hand operators, Fn for function/media.
-- **Miryoku-inspired parts:** thumb-held layer access and opposite-hand workflow with a compact 5-layer model.
+- **Corne logic:** richer daily-use setup with `Ctrl` and `Shift` dedicated on thumbs, plus four layer-hold thumbs.
+- **Sweep logic:** reduced-thumb minimal setup (`Space/NAV`, `Tab/NUM`, `Enter/SYM`, `Bksp/FN`) to match Sweep constraints cleanly.
+- **Miryoku-inspired parts:** thumb-held layer access, opposite-hand workflow, compact 5-layer model.
 - **Graphite-learning adaptations:** no home-row mod overload, minimal high-value combos only, and repeatable key positions prioritised over cleverness.
