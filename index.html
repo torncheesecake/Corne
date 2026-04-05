@@ -53,7 +53,7 @@
             --divider: #d7e1ef;
         }
 
-        .theme-light {
+        :root[data-theme="light"] {
             --page-bg: #e8edf7;
             --page-bg-soft: #f5f8ff;
             --muted-text: #3d4f65;
@@ -95,7 +95,7 @@
             --divider: #d7e1ef;
         }
 
-        .theme-dark {
+        :root[data-theme="dark"] {
             --page-bg: #09101c;
             --page-bg-soft: #121f34;
             --muted-text: #b1c0d6;
@@ -462,8 +462,8 @@
         .layer-shell-fn { background: var(--layer-shell-fn-bg); }
     </style>
 </head>
-<body class="p-2 sm:p-3 theme-light">
-    <div id="app" :class="['max-w-6xl mx-auto', darkMode ? 'theme-dark' : 'theme-light']">
+<body class="p-2 sm:p-3">
+    <div id="app" class="max-w-6xl mx-auto">
         <h1 class="text-xl sm:text-3xl font-bold text-center mb-1" style="letter-spacing: 0.01em;">{{ config.title }}</h1>
         <p class="text-center text-xs sm:text-sm mb-2.5" style="color: var(--muted-text); font-weight: 500;">{{ config.subtitle }}</p>
 
@@ -477,7 +477,7 @@
                 {{ kb.name }}
             </button>
             <button
-                @click="darkMode = !darkMode"
+                @click="toggleTheme"
                 class="control-btn px-3 py-1.5 text-xs sm:text-sm font-semibold"
             >
                 {{ darkMode ? 'Light' : 'Dark' }}
@@ -1594,9 +1594,25 @@
                 }
             },
             async mounted() {
+                this.initTheme();
                 await this.loadConfig();
             },
             methods: {
+                initTheme() {
+                    const savedTheme = localStorage.getItem("theme");
+                    const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+                    this.darkMode = savedTheme ? savedTheme === "dark" : preferredDark;
+                    this.applyTheme();
+                },
+                applyTheme() {
+                    const theme = this.darkMode ? "dark" : "light";
+                    document.documentElement.setAttribute("data-theme", theme);
+                    localStorage.setItem("theme", theme);
+                },
+                toggleTheme() {
+                    this.darkMode = !this.darkMode;
+                    this.applyTheme();
+                },
                 async loadConfig() {
                     try {
                         const response = await fetch("./app-keyboards-graphite.json");
