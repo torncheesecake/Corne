@@ -194,3 +194,10 @@ The implementation now follows the original Corne page approach more closely:
 - Added subtle layer-aware shell tinting and an active-layer indicator to improve at-a-glance orientation.
 - Tightened spacing and control sizing so the keyboard remains the dominant, always-open reference element.
 - Added a lightweight dark-mode toggle for long sessions, with no layout logic changes.
+
+## Final UI Refinement
+
+- Refined light and dark palettes for clearer contrast while keeping role colours subtle and functional.
+- Improved split-board cohesion with tighter half/thumb spacing and a softer central divider cue.
+- Standardised button and text rhythm for cleaner scanning and reduced visual noise.
+- Smoothed hover/focus behaviour to stay responsive but unobtrusive during daily reference use.
