@@ -134,3 +134,10 @@ The implementation now follows the original Corne page approach more closely:
 - Reworked split-board presentation into one cohesive keyboard shell instead of two separate card-like panels.
 - Improved stagger/spacing and thumb-cluster placement so Corne and Sweep silhouettes read more like real hardware.
 - Tightened tap vs hold label hierarchy for quicker scanning while configuring in VIA/QMK.
+
+## Final Quality Pass
+
+- Corne now uses the outer sixth column intentionally on Base (`Esc`, `Tab`, `` ` ``, `;`, `Bksp`, `Enter`, `Delete`) to reduce friction in daily use.
+- Corne layer labels and tooltips were tightened so high-value keys such as `Tab`, `[`, `]`, and `;` are explicit and easy to scan.
+- Sweep remains intentionally simpler than Corne, with fewer moving parts and the same Graphite core.
+- Combo guidance stays minimal and practical: `Esc`, `Tab`, `Delete`, plus optional `Caps Word` in QMK.

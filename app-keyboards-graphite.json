@@ -5,238 +5,941 @@
     {
       "id": "corne",
       "name": "Corne",
-      "description": "Corne v3 Choc (42-key, 3x6 + 3) with Miryoku-inspired daily-use thumbs",
-      "viaSafe": "Base/Nav/Sym/Num/Fn layers and thumb hold-layer model.",
-      "qmkOnly": "Minimal combos and Caps Word combo.",
+      "description": "Corne v3 Choc (42-key, 3x6 + 3): Graphite core with intentional outer-column utility keys",
+      "viaSafe": "Base/Nav/Sym/Num/Fn with dedicated outer utility keys and thumb hold-layers.",
+      "qmkOnly": "Minimal combos plus optional Caps Word combo.",
       "layers": [
-        { "id": "base", "name": "Base", "active": true },
-        { "id": "nav", "name": "Nav", "active": false },
-        { "id": "sym", "name": "Sym", "active": false },
-        { "id": "num", "name": "Num", "active": false },
-        { "id": "fn", "name": "Fn", "active": false }
+        {
+          "id": "base",
+          "name": "Base",
+          "active": true
+        },
+        {
+          "id": "nav",
+          "name": "Nav",
+          "active": false
+        },
+        {
+          "id": "sym",
+          "name": "Sym",
+          "active": false
+        },
+        {
+          "id": "num",
+          "name": "Num",
+          "active": false
+        },
+        {
+          "id": "fn",
+          "name": "Fn",
+          "active": false
+        }
       ],
       "keyboardLayout": {
         "rows": 3,
         "leftCols": 6,
         "rightCols": 6,
         "leftKeys": [
-          { "id": "L00", "row": 0, "class": "bg-gray-100" },
-          { "id": "L01", "row": 0, "class": "bg-gray-100" },
-          { "id": "L02", "row": 0, "class": "bg-gray-100" },
-          { "id": "L03", "row": 0, "class": "bg-gray-100" },
-          { "id": "L04", "row": 0, "class": "bg-gray-100" },
-          { "id": "L05", "row": 0, "class": "bg-gray-100" },
-          { "id": "L10", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "L11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "L12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "L13", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "L14", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "L15", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "L20", "row": 2, "class": "bg-gray-100" },
-          { "id": "L21", "row": 2, "class": "bg-gray-100" },
-          { "id": "L22", "row": 2, "class": "bg-gray-100" },
-          { "id": "L23", "row": 2, "class": "bg-gray-100" },
-          { "id": "L24", "row": 2, "class": "bg-gray-100" },
-          { "id": "L25", "row": 2, "class": "bg-gray-100" }
+          {
+            "id": "L00",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L01",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L02",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L03",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L04",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L05",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L10",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "L11",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "L12",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "L13",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "L14",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "L15",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "L20",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L21",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L22",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L23",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L24",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "L25",
+            "row": 2,
+            "class": "bg-gray-100"
+          }
         ],
         "rightKeys": [
-          { "id": "R00", "row": 0, "class": "bg-gray-100" },
-          { "id": "R01", "row": 0, "class": "bg-gray-100" },
-          { "id": "R02", "row": 0, "class": "bg-gray-100" },
-          { "id": "R03", "row": 0, "class": "bg-gray-100" },
-          { "id": "R04", "row": 0, "class": "bg-gray-100" },
-          { "id": "R05", "row": 0, "class": "bg-gray-100" },
-          { "id": "R10", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "R11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "R12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "R13", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "R14", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "R15", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "R20", "row": 2, "class": "bg-gray-100" },
-          { "id": "R21", "row": 2, "class": "bg-gray-100" },
-          { "id": "R22", "row": 2, "class": "bg-gray-100" },
-          { "id": "R23", "row": 2, "class": "bg-gray-100" },
-          { "id": "R24", "row": 2, "class": "bg-gray-100" },
-          { "id": "R25", "row": 2, "class": "bg-gray-100" }
+          {
+            "id": "R00",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R01",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R02",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R03",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R04",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R05",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R10",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "R11",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "R12",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "R13",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "R14",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "R15",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "R20",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R21",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R22",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R23",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R24",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "R25",
+            "row": 2,
+            "class": "bg-gray-100"
+          }
         ],
         "leftThumbKeys": [
-          { "id": "LT0", "class": "thumb-key bg-green-100" },
-          { "id": "LT1", "class": "thumb-key bg-green-100 combo-key" },
-          { "id": "LT2", "class": "thumb-key bg-green-100" }
+          {
+            "id": "LT0",
+            "class": "thumb-key bg-green-100"
+          },
+          {
+            "id": "LT1",
+            "class": "thumb-key bg-green-100 combo-key"
+          },
+          {
+            "id": "LT2",
+            "class": "thumb-key bg-green-100"
+          }
         ],
         "rightThumbKeys": [
-          { "id": "RT0", "class": "thumb-key bg-green-100 combo-key" },
-          { "id": "RT1", "class": "thumb-key bg-green-100" },
-          { "id": "RT2", "class": "thumb-key bg-green-100" }
+          {
+            "id": "RT0",
+            "class": "thumb-key bg-green-100 combo-key"
+          },
+          {
+            "id": "RT1",
+            "class": "thumb-key bg-green-100"
+          },
+          {
+            "id": "RT2",
+            "class": "thumb-key bg-green-100"
+          }
         ]
       },
       "layerData": {
         "base": {
-          "L00": "", "L01": "B", "L02": "L", "L03": "D", "L04": "W", "L05": "Z",
-          "L10": "", "L11": "N", "L12": "R", "L13": "T", "L14": "S", "L15": "G",
-          "L20": "", "L21": "Q", "L22": "X", "L23": "M", "L24": "C", "L25": "V",
-          "R00": "F", "R01": "O", "R02": "U", "R03": "J", "R04": "", "R05": "",
-          "R10": "Y", "R11": "H", "R12": "A", "R13": "E", "R14": "I", "R15": "",
-          "R20": "K", "R21": "P", "R22": ".", "R23": "'", "R24": "/", "R25": "",
-          "LT0": { "tap": "Ctrl" }, "LT1": { "tap": "Space", "hold": "NAV" }, "LT2": { "tap": "Tab", "hold": "NUM" },
-          "RT0": { "tap": "Enter", "hold": "SYM" }, "RT1": { "tap": "Bksp", "hold": "FN" }, "RT2": { "tap": "Shift" }
+          "L00": "Esc",
+          "L01": "B",
+          "L02": "L",
+          "L03": "D",
+          "L04": "W",
+          "L05": "Z",
+          "L10": "Tab",
+          "L11": "N",
+          "L12": "R",
+          "L13": "T",
+          "L14": "S",
+          "L15": "G",
+          "L20": "`",
+          "L21": "Q",
+          "L22": "X",
+          "L23": "M",
+          "L24": "C",
+          "L25": "V",
+          "R00": "F",
+          "R01": "O",
+          "R02": "U",
+          "R03": "J",
+          "R04": ";",
+          "R05": "Bksp",
+          "R10": "Y",
+          "R11": "H",
+          "R12": "A",
+          "R13": "E",
+          "R14": "I",
+          "R15": "Enter",
+          "R20": "K",
+          "R21": "P",
+          "R22": ".",
+          "R23": "'",
+          "R24": "/",
+          "R25": "Delete",
+          "LT0": {
+            "tap": "Ctrl"
+          },
+          "LT1": {
+            "tap": "Space",
+            "hold": "NAV"
+          },
+          "LT2": {
+            "tap": "Tab",
+            "hold": "NUM"
+          },
+          "RT0": {
+            "tap": "Enter",
+            "hold": "SYM"
+          },
+          "RT1": {
+            "tap": "Bksp",
+            "hold": "FN"
+          },
+          "RT2": {
+            "tap": "Shift"
+          }
         },
         "nav": {
-          "L00": "Esc", "L01": "Tab", "L02": "", "L03": "", "L04": "", "L05": "",
-          "L10": "", "L11": "", "L12": "", "L13": "", "L14": "", "L15": "",
-          "L20": "", "L21": "", "L22": "", "L23": "", "L24": "", "L25": "",
-          "R00": "", "R01": "Home", "R02": "PgUp", "R03": "PgDn", "R04": "End", "R05": "Delete",
-          "R10": "", "R11": "Left", "R12": "Down", "R13": "Up", "R14": "Right", "R15": "",
-          "R20": "", "R21": "", "R22": "", "R23": "", "R24": "", "R25": "",
-          "LT0": "", "LT1": "", "LT2": "", "RT0": "", "RT1": "", "RT2": ""
+          "L00": "Esc",
+          "L01": "Tab",
+          "L02": "Home",
+          "L03": "PgUp",
+          "L04": "PgDn",
+          "L05": "End",
+          "L10": "",
+          "L11": "",
+          "L12": "",
+          "L13": "",
+          "L14": "",
+          "L15": "",
+          "L20": "",
+          "L21": "",
+          "L22": "",
+          "L23": "",
+          "L24": "",
+          "L25": "",
+          "R00": "",
+          "R01": "Home",
+          "R02": "PgUp",
+          "R03": "PgDn",
+          "R04": "End",
+          "R05": "Delete",
+          "R10": "",
+          "R11": "Left",
+          "R12": "Down",
+          "R13": "Up",
+          "R14": "Right",
+          "R15": "Enter",
+          "R20": "",
+          "R21": "",
+          "R22": "",
+          "R23": "",
+          "R24": "",
+          "R25": "Bksp",
+          "LT0": "",
+          "LT1": "",
+          "LT2": "",
+          "RT0": "",
+          "RT1": "",
+          "RT2": ""
         },
         "sym": {
-          "L00": "!", "L01": "@", "L02": "#", "L03": "$", "L04": "%", "L05": "^",
-          "L10": "[", "L11": "]", "L12": "{", "L13": "}", "L14": "<", "L15": ">",
-          "L20": "=", "L21": "+", "L22": "-", "L23": "_", "L24": "", "L25": "",
-          "R00": "&", "R01": "*", "R02": "(", "R03": ")", "R04": "\\", "R05": "|",
-          "R10": "'", "R11": "\"", "R12": "`", "R13": "~", "R14": ":", "R15": ";",
-          "R20": "/", "R21": "?", "R22": ",", "R23": ".", "R24": "", "R25": "",
-          "LT0": "", "LT1": "", "LT2": "", "RT0": "", "RT1": "", "RT2": ""
+          "L00": "!",
+          "L01": "@",
+          "L02": "#",
+          "L03": "$",
+          "L04": "%",
+          "L05": "^",
+          "L10": "[",
+          "L11": "]",
+          "L12": "{",
+          "L13": "}",
+          "L14": "(",
+          "L15": ")",
+          "L20": "=",
+          "L21": "+",
+          "L22": "-",
+          "L23": "_",
+          "L24": "<",
+          "L25": ">",
+          "R00": "&",
+          "R01": "*",
+          "R02": "`",
+          "R03": "~",
+          "R04": "\\",
+          "R05": "|",
+          "R10": ";",
+          "R11": ":",
+          "R12": "'",
+          "R13": "\"",
+          "R14": "/",
+          "R15": "?",
+          "R20": ",",
+          "R21": ".",
+          "R22": "",
+          "R23": "",
+          "R24": "",
+          "R25": "",
+          "LT0": "",
+          "LT1": "",
+          "LT2": "",
+          "RT0": "",
+          "RT1": "",
+          "RT2": ""
         },
         "num": {
-          "L00": "", "L01": "", "L02": "", "L03": "", "L04": "", "L05": "",
-          "L10": "", "L11": "+", "L12": "-", "L13": "*", "L14": "/", "L15": "",
-          "L20": "", "L21": "=", "L22": "", "L23": "", "L24": "", "L25": "",
-          "R00": "", "R01": "7", "R02": "8", "R03": "9", "R04": "", "R05": "",
-          "R10": "", "R11": "4", "R12": "5", "R13": "6", "R14": "", "R15": "",
-          "R20": "", "R21": "1", "R22": "2", "R23": "3", "R24": "0", "R25": ".",
-          "LT0": "", "LT1": "", "LT2": "", "RT0": "", "RT1": "", "RT2": ""
+          "L00": "",
+          "L01": "",
+          "L02": "",
+          "L03": "",
+          "L04": "",
+          "L05": "",
+          "L10": "",
+          "L11": "+",
+          "L12": "-",
+          "L13": "*",
+          "L14": "/",
+          "L15": "",
+          "L20": "",
+          "L21": "=",
+          "L22": "",
+          "L23": "",
+          "L24": "",
+          "L25": "",
+          "R00": "",
+          "R01": "7",
+          "R02": "8",
+          "R03": "9",
+          "R04": "",
+          "R05": "",
+          "R10": "",
+          "R11": "4",
+          "R12": "5",
+          "R13": "6",
+          "R14": "",
+          "R15": "",
+          "R20": "",
+          "R21": "1",
+          "R22": "2",
+          "R23": "3",
+          "R24": "0",
+          "R25": ".",
+          "LT0": "",
+          "LT1": "",
+          "LT2": "",
+          "RT0": "",
+          "RT1": "",
+          "RT2": ""
         },
         "fn": {
-          "L00": "F1", "L01": "F2", "L02": "F3", "L03": "F4", "L04": "F5", "L05": "F6",
-          "L10": "", "L11": "", "L12": "", "L13": "", "L14": "", "L15": "",
-          "L20": "", "L21": "", "L22": "", "L23": "", "L24": "", "L25": "",
-          "R00": "F7", "R01": "F8", "R02": "F9", "R03": "F10", "R04": "F11", "R05": "F12",
-          "R10": "", "R11": "Vol-", "R12": "Mute", "R13": "Vol+", "R14": "", "R15": "",
-          "R20": "", "R21": "Prev", "R22": "Play", "R23": "Next", "R24": "", "R25": "",
-          "LT0": "", "LT1": "", "LT2": "", "RT0": "", "RT1": "", "RT2": ""
+          "L00": "F1",
+          "L01": "F2",
+          "L02": "F3",
+          "L03": "F4",
+          "L04": "F5",
+          "L05": "F6",
+          "L10": "",
+          "L11": "",
+          "L12": "",
+          "L13": "",
+          "L14": "",
+          "L15": "",
+          "L20": "",
+          "L21": "",
+          "L22": "",
+          "L23": "",
+          "L24": "",
+          "L25": "",
+          "R00": "F7",
+          "R01": "F8",
+          "R02": "F9",
+          "R03": "F10",
+          "R04": "F11",
+          "R05": "F12",
+          "R10": "",
+          "R11": "Vol-",
+          "R12": "Mute",
+          "R13": "Vol+",
+          "R14": "",
+          "R15": "",
+          "R20": "",
+          "R21": "Prev",
+          "R22": "Play",
+          "R23": "Next",
+          "R24": "",
+          "R25": "",
+          "LT0": "",
+          "LT1": "",
+          "LT2": "",
+          "RT0": "",
+          "RT1": "",
+          "RT2": ""
         }
       },
       "tooltips": {
         "LT1": "Space tap, NAV when held",
         "LT2": "Tab tap, NUM when held",
         "RT0": "Enter tap, SYM when held",
-        "RT1": "Bksp tap, FN when held"
+        "RT1": "Bksp tap, FN when held",
+        "L00": "Esc on outer column (quick reach)",
+        "L10": "Tab on outer column (quick reach)",
+        "R05": "Bksp duplicate on outer column",
+        "R15": "Enter duplicate on outer column",
+        "R25": "Delete on outer column"
       },
       "combos": [
-        { "keys": ["N", "R"], "output": "Esc", "note": "Quick cancel" },
-        { "keys": ["H", "A"], "output": "Tab", "note": "Focus switch" },
-        { "keys": ["E", "I"], "output": "Delete", "note": "Forward delete" },
-        { "keys": ["Space", "Enter"], "output": "Caps Word (QMK)", "note": "Optional coding helper" }
+        {
+          "keys": [
+            "N",
+            "R"
+          ],
+          "output": "Esc",
+          "note": "Quick cancel"
+        },
+        {
+          "keys": [
+            "H",
+            "A"
+          ],
+          "output": "Tab",
+          "note": "Focus switch"
+        },
+        {
+          "keys": [
+            "E",
+            "I"
+          ],
+          "output": "Delete",
+          "note": "Forward delete"
+        },
+        {
+          "keys": [
+            "Space",
+            "Enter"
+          ],
+          "output": "Caps Word (QMK)",
+          "note": "Optional coding helper"
+        }
       ]
     },
     {
       "id": "sweep",
       "name": "Ferris Sweep",
-      "description": "Ferris Sweep (34-key, 3x5 + 2) with compact Graphite-focused layers",
-      "viaSafe": "Base/Nav/Sym/Num/Fn layers and thumb hold-layer model.",
-      "qmkOnly": "Minimal combos and Caps Word combo.",
+      "description": "Ferris Sweep (34-key, 3x5 + 2): compact Graphite setup with minimal moving parts",
+      "viaSafe": "Base/Nav/Sym/Num/Fn with minimal thumb hold-layers.",
+      "qmkOnly": "Minimal combos plus optional Caps Word combo.",
       "layers": [
-        { "id": "base", "name": "Base", "active": true },
-        { "id": "nav", "name": "Nav", "active": false },
-        { "id": "sym", "name": "Sym", "active": false },
-        { "id": "num", "name": "Num", "active": false },
-        { "id": "fn", "name": "Fn", "active": false }
+        {
+          "id": "base",
+          "name": "Base",
+          "active": true
+        },
+        {
+          "id": "nav",
+          "name": "Nav",
+          "active": false
+        },
+        {
+          "id": "sym",
+          "name": "Sym",
+          "active": false
+        },
+        {
+          "id": "num",
+          "name": "Num",
+          "active": false
+        },
+        {
+          "id": "fn",
+          "name": "Fn",
+          "active": false
+        }
       ],
       "keyboardLayout": {
         "rows": 3,
         "leftCols": 5,
         "rightCols": 5,
         "leftKeys": [
-          { "id": "SL00", "row": 0, "class": "bg-gray-100" },
-          { "id": "SL01", "row": 0, "class": "bg-gray-100" },
-          { "id": "SL02", "row": 0, "class": "bg-gray-100" },
-          { "id": "SL03", "row": 0, "class": "bg-gray-100" },
-          { "id": "SL04", "row": 0, "class": "bg-gray-100" },
-          { "id": "SL10", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "SL11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SL12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SL13", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "SL14", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "SL20", "row": 2, "class": "bg-gray-100" },
-          { "id": "SL21", "row": 2, "class": "bg-gray-100" },
-          { "id": "SL22", "row": 2, "class": "bg-gray-100" },
-          { "id": "SL23", "row": 2, "class": "bg-gray-100" },
-          { "id": "SL24", "row": 2, "class": "bg-gray-100" }
+          {
+            "id": "SL00",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL01",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL02",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL03",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL04",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL10",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "SL11",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SL12",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SL13",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "SL14",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "SL20",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL21",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL22",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL23",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SL24",
+            "row": 2,
+            "class": "bg-gray-100"
+          }
         ],
         "rightKeys": [
-          { "id": "SR00", "row": 0, "class": "bg-gray-100" },
-          { "id": "SR01", "row": 0, "class": "bg-gray-100" },
-          { "id": "SR02", "row": 0, "class": "bg-gray-100" },
-          { "id": "SR03", "row": 0, "class": "bg-gray-100" },
-          { "id": "SR04", "row": 0, "class": "bg-gray-100" },
-          { "id": "SR10", "row": 1, "class": "bg-gray-100 home-row" },
-          { "id": "SR11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SR12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SR13", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SR14", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-          { "id": "SR20", "row": 2, "class": "bg-gray-100" },
-          { "id": "SR21", "row": 2, "class": "bg-gray-100" },
-          { "id": "SR22", "row": 2, "class": "bg-gray-100" },
-          { "id": "SR23", "row": 2, "class": "bg-gray-100" },
-          { "id": "SR24", "row": 2, "class": "bg-gray-100" }
+          {
+            "id": "SR00",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR01",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR02",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR03",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR04",
+            "row": 0,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR10",
+            "row": 1,
+            "class": "bg-gray-100 home-row"
+          },
+          {
+            "id": "SR11",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SR12",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SR13",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SR14",
+            "row": 1,
+            "class": "bg-gray-100 home-row combo-key"
+          },
+          {
+            "id": "SR20",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR21",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR22",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR23",
+            "row": 2,
+            "class": "bg-gray-100"
+          },
+          {
+            "id": "SR24",
+            "row": 2,
+            "class": "bg-gray-100"
+          }
         ],
         "leftThumbKeys": [
-          { "id": "SLT0", "class": "thumb-key bg-green-100 combo-key" },
-          { "id": "SLT1", "class": "thumb-key bg-green-100" }
+          {
+            "id": "SLT0",
+            "class": "thumb-key bg-green-100 combo-key"
+          },
+          {
+            "id": "SLT1",
+            "class": "thumb-key bg-green-100"
+          }
         ],
         "rightThumbKeys": [
-          { "id": "SRT0", "class": "thumb-key bg-green-100 combo-key" },
-          { "id": "SRT1", "class": "thumb-key bg-green-100" }
+          {
+            "id": "SRT0",
+            "class": "thumb-key bg-green-100 combo-key"
+          },
+          {
+            "id": "SRT1",
+            "class": "thumb-key bg-green-100"
+          }
         ]
       },
       "layerData": {
         "base": {
-          "SL00": "B", "SL01": "L", "SL02": "D", "SL03": "W", "SL04": "Z",
-          "SL10": "N", "SL11": "R", "SL12": "T", "SL13": "S", "SL14": "G",
-          "SL20": "Q", "SL21": "X", "SL22": "M", "SL23": "C", "SL24": "V",
-          "SR00": "F", "SR01": "O", "SR02": "U", "SR03": "J", "SR04": ";",
-          "SR10": "Y", "SR11": "H", "SR12": "A", "SR13": "E", "SR14": "I",
-          "SR20": "K", "SR21": "P", "SR22": ".", "SR23": "'", "SR24": "/",
-          "SLT0": { "tap": "Space", "hold": "NAV" }, "SLT1": { "tap": "Tab", "hold": "NUM" },
-          "SRT0": { "tap": "Enter", "hold": "SYM" }, "SRT1": { "tap": "Bksp", "hold": "FN" }
+          "SL00": "B",
+          "SL01": "L",
+          "SL02": "D",
+          "SL03": "W",
+          "SL04": "Z",
+          "SL10": "N",
+          "SL11": "R",
+          "SL12": "T",
+          "SL13": "S",
+          "SL14": "G",
+          "SL20": "Q",
+          "SL21": "X",
+          "SL22": "M",
+          "SL23": "C",
+          "SL24": "V",
+          "SR00": "F",
+          "SR01": "O",
+          "SR02": "U",
+          "SR03": "J",
+          "SR04": ";",
+          "SR10": "Y",
+          "SR11": "H",
+          "SR12": "A",
+          "SR13": "E",
+          "SR14": "I",
+          "SR20": "K",
+          "SR21": "P",
+          "SR22": ".",
+          "SR23": "'",
+          "SR24": "/",
+          "SLT0": {
+            "tap": "Space",
+            "hold": "NAV"
+          },
+          "SLT1": {
+            "tap": "Tab",
+            "hold": "NUM"
+          },
+          "SRT0": {
+            "tap": "Enter",
+            "hold": "SYM"
+          },
+          "SRT1": {
+            "tap": "Bksp",
+            "hold": "FN"
+          }
         },
         "nav": {
-          "SL00": "Esc", "SL01": "Tab", "SL02": "", "SL03": "", "SL04": "",
-          "SL10": "", "SL11": "", "SL12": "", "SL13": "", "SL14": "",
-          "SL20": "", "SL21": "", "SL22": "", "SL23": "", "SL24": "",
-          "SR00": "Home", "SR01": "PgUp", "SR02": "PgDn", "SR03": "End", "SR04": "Delete",
-          "SR10": "Left", "SR11": "Down", "SR12": "Up", "SR13": "Right", "SR14": "",
-          "SR20": "", "SR21": "", "SR22": "", "SR23": "", "SR24": "",
-          "SLT0": "", "SLT1": "", "SRT0": "", "SRT1": ""
+          "SL00": "Esc",
+          "SL01": "Tab",
+          "SL02": "",
+          "SL03": "",
+          "SL04": "",
+          "SL10": "",
+          "SL11": "",
+          "SL12": "",
+          "SL13": "",
+          "SL14": "",
+          "SL20": "",
+          "SL21": "",
+          "SL22": "",
+          "SL23": "",
+          "SL24": "",
+          "SR00": "Home",
+          "SR01": "PgUp",
+          "SR02": "PgDn",
+          "SR03": "End",
+          "SR04": "Delete",
+          "SR10": "Left",
+          "SR11": "Down",
+          "SR12": "Up",
+          "SR13": "Right",
+          "SR14": "",
+          "SR20": "",
+          "SR21": "",
+          "SR22": "",
+          "SR23": "",
+          "SR24": "",
+          "SLT0": "",
+          "SLT1": "",
+          "SRT0": "",
+          "SRT1": ""
         },
         "sym": {
-          "SL00": "!", "SL01": "@", "SL02": "#", "SL03": "$", "SL04": "%",
-          "SL10": "[", "SL11": "]", "SL12": "{", "SL13": "}", "SL14": "<",
-          "SL20": "=", "SL21": "+", "SL22": "-", "SL23": "_", "SL24": ">",
-          "SR00": "^", "SR01": "&", "SR02": "*", "SR03": "(", "SR04": ")",
-          "SR10": "\\", "SR11": "|", "SR12": ":", "SR13": ";", "SR14": "\"",
-          "SR20": "/", "SR21": "?", "SR22": ",", "SR23": ".", "SR24": "'",
-          "SLT0": "", "SLT1": "", "SRT0": "", "SRT1": ""
+          "SL00": "!",
+          "SL01": "@",
+          "SL02": "#",
+          "SL03": "$",
+          "SL04": "%",
+          "SL10": "[",
+          "SL11": "]",
+          "SL12": "{",
+          "SL13": "}",
+          "SL14": "<",
+          "SL20": "=",
+          "SL21": "+",
+          "SL22": "-",
+          "SL23": "_",
+          "SL24": ">",
+          "SR00": "^",
+          "SR01": "&",
+          "SR02": "*",
+          "SR03": "(",
+          "SR04": ")",
+          "SR10": "\\",
+          "SR11": "|",
+          "SR12": ":",
+          "SR13": ";",
+          "SR14": "\"",
+          "SR20": "/",
+          "SR21": "?",
+          "SR22": ",",
+          "SR23": ".",
+          "SR24": "'",
+          "SLT0": "",
+          "SLT1": "",
+          "SRT0": "",
+          "SRT1": ""
         },
         "num": {
-          "SL00": "", "SL01": "+", "SL02": "-", "SL03": "*", "SL04": "/",
-          "SL10": "", "SL11": "=", "SL12": "", "SL13": "", "SL14": "",
-          "SL20": "", "SL21": "", "SL22": "", "SL23": "", "SL24": "",
-          "SR00": "7", "SR01": "8", "SR02": "9", "SR03": "", "SR04": "",
-          "SR10": "4", "SR11": "5", "SR12": "6", "SR13": "", "SR14": "",
-          "SR20": "1", "SR21": "2", "SR22": "3", "SR23": "0", "SR24": ".",
-          "SLT0": "", "SLT1": "", "SRT0": "", "SRT1": ""
+          "SL00": "",
+          "SL01": "+",
+          "SL02": "-",
+          "SL03": "*",
+          "SL04": "/",
+          "SL10": "",
+          "SL11": "=",
+          "SL12": "",
+          "SL13": "",
+          "SL14": "",
+          "SL20": "",
+          "SL21": "",
+          "SL22": "",
+          "SL23": "",
+          "SL24": "",
+          "SR00": "7",
+          "SR01": "8",
+          "SR02": "9",
+          "SR03": "",
+          "SR04": "",
+          "SR10": "4",
+          "SR11": "5",
+          "SR12": "6",
+          "SR13": "",
+          "SR14": "",
+          "SR20": "1",
+          "SR21": "2",
+          "SR22": "3",
+          "SR23": "0",
+          "SR24": ".",
+          "SLT0": "",
+          "SLT1": "",
+          "SRT0": "",
+          "SRT1": ""
         },
         "fn": {
-          "SL00": "F1", "SL01": "F2", "SL02": "F3", "SL03": "F4", "SL04": "F5",
-          "SL10": "F6", "SL11": "", "SL12": "", "SL13": "", "SL14": "",
-          "SL20": "", "SL21": "", "SL22": "", "SL23": "", "SL24": "",
-          "SR00": "F7", "SR01": "F8", "SR02": "F9", "SR03": "F10", "SR04": "F11",
-          "SR10": "F12", "SR11": "Vol-", "SR12": "Mute", "SR13": "Vol+", "SR14": "",
-          "SR20": "Prev", "SR21": "Play", "SR22": "Next", "SR23": "", "SR24": "",
-          "SLT0": "", "SLT1": "", "SRT0": "", "SRT1": ""
+          "SL00": "F1",
+          "SL01": "F2",
+          "SL02": "F3",
+          "SL03": "F4",
+          "SL04": "F5",
+          "SL10": "F6",
+          "SL11": "",
+          "SL12": "",
+          "SL13": "",
+          "SL14": "",
+          "SL20": "",
+          "SL21": "",
+          "SL22": "",
+          "SL23": "",
+          "SL24": "",
+          "SR00": "F7",
+          "SR01": "F8",
+          "SR02": "F9",
+          "SR03": "F10",
+          "SR04": "F11",
+          "SR10": "F12",
+          "SR11": "Vol-",
+          "SR12": "Mute",
+          "SR13": "Vol+",
+          "SR14": "",
+          "SR20": "Prev",
+          "SR21": "Play",
+          "SR22": "Next",
+          "SR23": "",
+          "SR24": "",
+          "SLT0": "",
+          "SLT1": "",
+          "SRT0": "",
+          "SRT1": ""
         }
       },
       "tooltips": {
@@ -246,10 +949,38 @@
         "SRT1": "Bksp tap, FN when held"
       },
       "combos": [
-        { "keys": ["R", "T"], "output": "Esc", "note": "Quick cancel" },
-        { "keys": ["H", "A"], "output": "Tab", "note": "Focus switch" },
-        { "keys": ["E", "I"], "output": "Delete", "note": "Forward delete" },
-        { "keys": ["Space", "Enter"], "output": "Caps Word (QMK)", "note": "Optional coding helper" }
+        {
+          "keys": [
+            "R",
+            "T"
+          ],
+          "output": "Esc",
+          "note": "Quick cancel"
+        },
+        {
+          "keys": [
+            "H",
+            "A"
+          ],
+          "output": "Tab",
+          "note": "Focus switch"
+        },
+        {
+          "keys": [
+            "E",
+            "I"
+          ],
+          "output": "Delete",
+          "note": "Forward delete"
+        },
+        {
+          "keys": [
+            "Space",
+            "Enter"
+          ],
+          "output": "Caps Word (QMK)",
+          "note": "Optional coding helper"
+        }
       ]
     }
   ]
