@@ -7,6 +7,45 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
+        :root {
+            --page-bg: #f1f5f9;
+            --muted-text: #475569;
+            --shell-bg: #f8fafc;
+            --shell-border: #d1d5db;
+            --shell-shadow: rgba(15, 23, 42, 0.06);
+            --alpha-bg: #ffffff;
+            --alpha-border: #cbd5e1;
+            --home-bg: #f8fafc;
+            --home-border: #93c5fd;
+            --thumb-bg: #ecfdf5;
+            --thumb-border: #86efac;
+            --held-bg: #eff6ff;
+            --held-border: #93c5fd;
+            --anchor-bg: #fff7ed;
+            --anchor-border: #fdba74;
+            --layer-nav-bg: #ecfeff;
+            --layer-nav-border: #a5f3fc;
+            --layer-sym-bg: #fff7ed;
+            --layer-sym-border: #fdba74;
+            --layer-num-bg: #f5f3ff;
+            --layer-num-border: #c4b5fd;
+            --layer-fn-bg: #f3f4f6;
+            --layer-fn-border: #d1d5db;
+            --combo-border: #f59e0b;
+            --control-bg: #e2e8f0;
+            --control-hover: #cbd5e1;
+            --control-text: #0f172a;
+            --control-active-bg: #2563eb;
+            --control-active-text: #ffffff;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e8f0;
+            --layer-shell-base-bg: #f8fafc;
+            --layer-shell-nav-bg: #eaf9fb;
+            --layer-shell-sym-bg: #fff4e6;
+            --layer-shell-num-bg: #f3efff;
+            --layer-shell-fn-bg: #f3f4f6;
+        }
+
         .theme-light {
             --page-bg: #f1f5f9;
             --muted-text: #475569;
@@ -39,6 +78,11 @@
             --control-active-text: #ffffff;
             --panel-bg: #ffffff;
             --panel-border: #e2e8f0;
+            --layer-shell-base-bg: #f8fafc;
+            --layer-shell-nav-bg: #eaf9fb;
+            --layer-shell-sym-bg: #fff4e6;
+            --layer-shell-num-bg: #f3efff;
+            --layer-shell-fn-bg: #f3f4f6;
         }
 
         .theme-dark {
@@ -73,6 +117,11 @@
             --control-active-text: #ffffff;
             --panel-bg: #111827;
             --panel-border: #334155;
+            --layer-shell-base-bg: #111827;
+            --layer-shell-nav-bg: #10242c;
+            --layer-shell-sym-bg: #2a2115;
+            --layer-shell-num-bg: #1f1831;
+            --layer-shell-fn-bg: #1f2937;
         }
 
         #app {
@@ -358,14 +407,14 @@
             box-shadow: 0 1px 2px var(--shell-shadow);
         }
 
-        .layer-shell-base { background: color-mix(in srgb, var(--shell-bg) 92%, #ffffff); }
-        .layer-shell-nav { background: color-mix(in srgb, var(--layer-nav-bg) 22%, var(--shell-bg)); }
-        .layer-shell-sym { background: color-mix(in srgb, var(--layer-sym-bg) 22%, var(--shell-bg)); }
-        .layer-shell-num { background: color-mix(in srgb, var(--layer-num-bg) 24%, var(--shell-bg)); }
-        .layer-shell-fn { background: color-mix(in srgb, var(--layer-fn-bg) 28%, var(--shell-bg)); }
+        .layer-shell-base { background: var(--layer-shell-base-bg); }
+        .layer-shell-nav { background: var(--layer-shell-nav-bg); }
+        .layer-shell-sym { background: var(--layer-shell-sym-bg); }
+        .layer-shell-num { background: var(--layer-shell-num-bg); }
+        .layer-shell-fn { background: var(--layer-shell-fn-bg); }
     </style>
 </head>
-<body class="p-3 sm:p-4">
+<body class="p-3 sm:p-4 theme-light">
     <div id="app" :class="['max-w-6xl mx-auto', darkMode ? 'theme-dark' : 'theme-light']">
         <h1 class="text-xl sm:text-2xl font-bold text-center mb-1">{{ config.title }}</h1>
         <p class="text-center text-xs sm:text-sm mb-3" style="color: var(--muted-text);">{{ config.subtitle }}</p>

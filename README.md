@@ -14,6 +14,7 @@ The website is the source of truth. Firmware files are now aligned to the curren
 
 - Corne keymap:
   - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/keymap.c`
+  - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/config.h`
   - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/rules.mk`
   - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/readme.md`
 - Ferris Sweep keymap:
@@ -50,6 +51,7 @@ Both are implemented in `keymap.c` behind `#ifdef` guards and are disabled by de
 - Corne includes explicit outer-column editing anchors as shown on the site.
 - Sweep stays intentionally minimal and does not inherit Corne-specific extra-column behaviour.
 - VIA enablement for Sweep can depend on target support in your QMK tree, so it is left commented in Sweep `rules.mk`.
+- Corne uses 5 layers with VIA, so `config.h` sets `DYNAMIC_KEYMAP_LAYER_COUNT 5`.
 
 ## Supported Keyboards
 
