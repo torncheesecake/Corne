@@ -211,13 +211,17 @@ The implementation now follows the original Corne page approach more closely:
 
 ## Practical QoL Features
 
-- Added `Reset View` to return quickly to a known baseline (`Corne`, `Base`, light theme, combos off).
-- Added `Copy View Link` so current keyboard/layer/theme/toggle state can be shared or reopened directly.
-- View state is reflected in URL query parameters and restored on page load.
+- View state is reflected in URL query parameters and restored on page load for keyboard, layer, theme, and combos visibility.
 
 ## Typography and Styling Refinement
 
 - Upgraded typography with a cleaner premium sans stack (`Manrope` with sensible fallbacks) and clearer heading/metadata hierarchy.
 - Refined spacing rhythm, panel treatment, and controls for a more deliberate, less prototype-like feel.
 - Removed `Learning Mode` and `Hold Emphasis` controls to reduce clutter and keep the page keyboard-first.
-- Kept practical controls: keyboard selector, layer selector, dark/light, combos toggle, reset, and copy-view-link.
+- Kept practical controls: keyboard selector, layer selector, dark/light, and combos toggle.
+
+## Bold Visual Redesign
+
+- Elevated keyboard prominence with a stronger shell silhouette, deeper contrast, and more dramatic framing.
+- Made controls more substantial and cohesive with grouped strips and clearer active states.
+- Removed low-value utility controls (`Reset View`, `Copy View Link`) to reduce clutter and keep focus on the keyboard.
