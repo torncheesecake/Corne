@@ -102,3 +102,11 @@ The implementation now follows the original Corne page approach more closely:
 - Tailwind CDN styling with compact keyboard cards and light interaction
 - Layer switching and combo toggle behaviour aligned to the original interaction model
 - Keyboard-first page flow with minimal extra UI
+
+
+## Final Layout Logic (Current)
+
+- **Thumb logic:** `Ctrl`, `Space/NAV`, `Tab/NUM` on left and `Enter/SYM`, `Bksp/FN`, `Shift` on right for high-frequency actions first, layers second.
+- **Layer logic:** Base for Graphite learning, Nav for movement/editing, Sym for punctuation/operators, Num as right-hand numpad pattern with light left-hand operators, Fn for function/media.
+- **Miryoku-inspired parts:** thumb-held layer access and opposite-hand workflow with a compact 5-layer model.
+- **Graphite-learning adaptations:** no home-row mod overload, minimal high-value combos only, and repeatable key positions prioritised over cleverness.

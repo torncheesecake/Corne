@@ -1,67 +1,245 @@
 {
   "title": "Miryoku-inspired Corne Graphite Layout",
-  "subtitle": "Corne v3 Choc (42-key, 3x6 + 3) with Graphite alphas and practical daily-use layers",
+  "subtitle": "Corne v3 Choc (42-key) \u2022 Graphite base \u2022 Miryoku-inspired daily-use layers",
   "layers": [
-    { "id": "base", "name": "Base", "active": true },
-    { "id": "nav", "name": "Nav", "active": false },
-    { "id": "sym", "name": "Sym", "active": false },
-    { "id": "num", "name": "Num", "active": false },
-    { "id": "fn", "name": "Fn", "active": false }
+    {
+      "id": "base",
+      "name": "Base",
+      "active": true
+    },
+    {
+      "id": "nav",
+      "name": "Nav",
+      "active": false
+    },
+    {
+      "id": "sym",
+      "name": "Sym",
+      "active": false
+    },
+    {
+      "id": "num",
+      "name": "Num",
+      "active": false
+    },
+    {
+      "id": "fn",
+      "name": "Fn",
+      "active": false
+    }
   ],
   "keyboardLayout": {
     "leftKeys": [
-      { "id": "L00", "row": 0, "class": "bg-gray-100" },
-      { "id": "L01", "row": 0, "class": "bg-gray-100" },
-      { "id": "L02", "row": 0, "class": "bg-gray-100 combo-key" },
-      { "id": "L03", "row": 0, "class": "bg-gray-100" },
-      { "id": "L04", "row": 0, "class": "bg-gray-100 combo-key" },
-      { "id": "L05", "row": 0, "class": "bg-gray-100" },
-
-      { "id": "L10", "row": 1, "class": "bg-gray-100 home-row" },
-      { "id": "L11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "L12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "L13", "row": 1, "class": "bg-gray-100 home-row" },
-      { "id": "L14", "row": 1, "class": "bg-gray-100 home-row" },
-      { "id": "L15", "row": 1, "class": "bg-gray-100 home-row" },
-
-      { "id": "L20", "row": 2, "class": "bg-gray-100" },
-      { "id": "L21", "row": 2, "class": "bg-gray-100" },
-      { "id": "L22", "row": 2, "class": "bg-gray-100" },
-      { "id": "L23", "row": 2, "class": "bg-gray-100" },
-      { "id": "L24", "row": 2, "class": "bg-gray-100" },
-      { "id": "L25", "row": 2, "class": "bg-gray-100" }
+      {
+        "id": "L00",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L01",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L02",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L03",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L04",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L05",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L10",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "L11",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "L12",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "L13",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "L14",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "L15",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "L20",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L21",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L22",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L23",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L24",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "L25",
+        "row": 2,
+        "class": "bg-gray-100"
+      }
     ],
     "rightKeys": [
-      { "id": "R00", "row": 0, "class": "bg-gray-100 combo-key" },
-      { "id": "R01", "row": 0, "class": "bg-gray-100" },
-      { "id": "R02", "row": 0, "class": "bg-gray-100" },
-      { "id": "R03", "row": 0, "class": "bg-gray-100" },
-      { "id": "R04", "row": 0, "class": "bg-gray-100" },
-      { "id": "R05", "row": 0, "class": "bg-gray-100" },
-
-      { "id": "R10", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "R11", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "R12", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "R13", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "R14", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-      { "id": "R15", "row": 1, "class": "bg-gray-100 home-row combo-key" },
-
-      { "id": "R20", "row": 2, "class": "bg-gray-100" },
-      { "id": "R21", "row": 2, "class": "bg-gray-100" },
-      { "id": "R22", "row": 2, "class": "bg-gray-100" },
-      { "id": "R23", "row": 2, "class": "bg-gray-100" },
-      { "id": "R24", "row": 2, "class": "bg-gray-100" },
-      { "id": "R25", "row": 2, "class": "bg-gray-100" }
+      {
+        "id": "R00",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R01",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R02",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R03",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R04",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R05",
+        "row": 0,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R10",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "R11",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "R12",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "R13",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "R14",
+        "row": 1,
+        "class": "bg-gray-100 home-row combo-key"
+      },
+      {
+        "id": "R15",
+        "row": 1,
+        "class": "bg-gray-100 home-row"
+      },
+      {
+        "id": "R20",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R21",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R22",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R23",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R24",
+        "row": 2,
+        "class": "bg-gray-100"
+      },
+      {
+        "id": "R25",
+        "row": 2,
+        "class": "bg-gray-100"
+      }
     ],
     "leftThumbKeys": [
-      { "id": "LT0", "class": "thumb-key bg-green-100" },
-      { "id": "LT1", "class": "thumb-key bg-green-100 combo-key" },
-      { "id": "LT2", "class": "thumb-key bg-green-100" }
+      {
+        "id": "LT0",
+        "class": "thumb-key bg-green-100"
+      },
+      {
+        "id": "LT1",
+        "class": "thumb-key bg-green-100 combo-key"
+      },
+      {
+        "id": "LT2",
+        "class": "thumb-key bg-green-100"
+      }
     ],
     "rightThumbKeys": [
-      { "id": "RT0", "class": "thumb-key bg-green-100 combo-key" },
-      { "id": "RT1", "class": "thumb-key bg-green-100" },
-      { "id": "RT2", "class": "thumb-key bg-green-100" }
+      {
+        "id": "RT0",
+        "class": "thumb-key bg-green-100 combo-key"
+      },
+      {
+        "id": "RT1",
+        "class": "thumb-key bg-green-100"
+      },
+      {
+        "id": "RT2",
+        "class": "thumb-key bg-green-100"
+      }
     ]
   },
   "layerData": {
@@ -84,7 +262,6 @@
       "L23": "M",
       "L24": "C",
       "L25": "V",
-
       "R00": "F",
       "R01": "O",
       "R02": "U",
@@ -103,13 +280,28 @@
       "R23": "'",
       "R24": "/",
       "R25": "",
-
-      "LT0": { "tap": "Ctrl" },
-      "LT1": { "tap": "Space", "hold": "NAV" },
-      "LT2": { "tap": "Tab", "hold": "NUM" },
-      "RT0": { "tap": "Enter", "hold": "SYM" },
-      "RT1": { "tap": "Bksp", "hold": "FN" },
-      "RT2": { "tap": "Shift" }
+      "LT0": {
+        "tap": "Ctrl"
+      },
+      "LT1": {
+        "tap": "Space",
+        "hold": "NAV"
+      },
+      "LT2": {
+        "tap": "Tab",
+        "hold": "NUM"
+      },
+      "RT0": {
+        "tap": "Enter",
+        "hold": "SYM"
+      },
+      "RT1": {
+        "tap": "Bksp",
+        "hold": "FN"
+      },
+      "RT2": {
+        "tap": "Shift"
+      }
     },
     "nav": {
       "L00": "Esc",
@@ -130,7 +322,6 @@
       "L23": "",
       "L24": "",
       "L25": "",
-
       "R00": "",
       "R01": "Home",
       "R02": "PgUp",
@@ -149,7 +340,6 @@
       "R23": "",
       "R24": "",
       "R25": "",
-
       "LT0": "",
       "LT1": "",
       "LT2": "",
@@ -176,7 +366,6 @@
       "L23": "_",
       "L24": "",
       "L25": "",
-
       "R00": "&",
       "R01": "*",
       "R02": "(",
@@ -195,7 +384,6 @@
       "R23": ".",
       "R24": "",
       "R25": "",
-
       "LT0": "",
       "LT1": "",
       "LT2": "",
@@ -222,7 +410,6 @@
       "L23": "",
       "L24": "",
       "L25": "",
-
       "R00": "",
       "R01": "7",
       "R02": "8",
@@ -240,8 +427,7 @@
       "R22": "2",
       "R23": "3",
       "R24": "0",
-      "R25": "",
-
+      "R25": ".",
       "LT0": "",
       "LT1": "",
       "LT2": "",
@@ -268,7 +454,6 @@
       "L23": "",
       "L24": "",
       "L25": "",
-
       "R00": "F7",
       "R01": "F8",
       "R02": "F9",
@@ -287,7 +472,6 @@
       "R23": "Next",
       "R24": "",
       "R25": "",
-
       "LT0": "",
       "LT1": "",
       "LT2": "",
@@ -300,7 +484,7 @@
     "LT1": "Space tap, NAV when held (VIA-safe layer key)",
     "LT2": "Tab tap, NUM when held (VIA-safe layer key)",
     "RT0": "Enter tap, SYM when held (VIA-safe layer key)",
-    "RT1": "Backspace tap, FN when held (VIA-safe layer key)",
+    "RT1": "Bksp tap, FN when held (VIA-safe layer key)",
     "L11": "Combo source for Esc (N + R) in base layer",
     "L12": "Combo source for Esc (N + R) in base layer",
     "R12": "Combo source for Tab (H + A) in base layer",
@@ -308,9 +492,37 @@
     "R14": "Combo source for Delete (E + I) in base layer"
   },
   "combos": [
-    { "keys": ["N", "R"], "output": "Esc" },
-    { "keys": ["H", "A"], "output": "Tab" },
-    { "keys": ["E", "I"], "output": "Delete" },
-    { "keys": ["Space", "Enter"], "output": "Caps Word" }
+    {
+      "keys": [
+        "N",
+        "R"
+      ],
+      "output": "Esc",
+      "note": "Quick cancel"
+    },
+    {
+      "keys": [
+        "H",
+        "A"
+      ],
+      "output": "Tab",
+      "note": "Focus switch"
+    },
+    {
+      "keys": [
+        "E",
+        "I"
+      ],
+      "output": "Delete",
+      "note": "Forward delete"
+    },
+    {
+      "keys": [
+        "Space",
+        "Enter"
+      ],
+      "output": "Caps Word (QMK)",
+      "note": "Optional coding helper"
+    }
   ]
 }
