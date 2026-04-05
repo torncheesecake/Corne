@@ -67,7 +67,7 @@ const uint16_t PROGMEM cmb_esc[]       = {KC_N,    KC_R,    COMBO_END};
 const uint16_t PROGMEM cmb_tab[]       = {KC_H,    KC_A,    COMBO_END};
 const uint16_t PROGMEM cmb_del[]       = {KC_E,    KC_I,    COMBO_END};
 #ifdef CAPS_WORD_ENABLE
-const uint16_t PROGMEM cmb_caps_word[] = {KC_SPC,  KC_ENT,  COMBO_END};
+const uint16_t PROGMEM cmb_caps_word[] = {LT(_NAV, KC_SPC), LT(_SYM, KC_ENT), COMBO_END};
 #endif
 
 combo_t key_combos[CMB_COUNT] = {
