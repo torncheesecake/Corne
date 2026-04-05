@@ -8,6 +8,49 @@ Static GitHub Pages-ready keyboard layout reference for **Corne v3 Choc** and **
 - `app-keyboards-graphite.json`: Main editable source for both keyboard modes
 - `assets/`: Optional folder for future static assets
 
+## Firmware Sync (QMK)
+
+The website is the source of truth. Firmware files are now aligned to the current site layout.
+
+- Corne keymap:
+  - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/keymap.c`
+  - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/rules.mk`
+  - `qmk_firmware/keyboards/crkbd/keymaps/graphite_corne/readme.md`
+- Ferris Sweep keymap:
+  - `qmk_firmware/keyboards/ferris/sweep/keymaps/graphite_sweep/keymap.c`
+  - `qmk_firmware/keyboards/ferris/sweep/keymaps/graphite_sweep/rules.mk`
+  - `qmk_firmware/keyboards/ferris/sweep/keymaps/graphite_sweep/readme.md`
+
+These keymaps mirror the same five-layer model used on the site:
+
+- `Base`
+- `Nav`
+- `Sym`
+- `Num`
+- `Fn`
+
+Thumb hold-layer behaviour is mapped exactly from the site definitions.
+
+### VIA-safe vs QMK-only in firmware
+
+VIA-safe core:
+
+- Base/Nav/Sym/Num/Fn layers
+- Thumb hold-layer model (`LT(...)`) matching site tap/hold roles
+
+QMK-only optional features:
+
+- Combos (`COMBO_ENABLE`)
+- Caps Word combo (`CAPS_WORD_ENABLE`)
+
+Both are implemented in `keymap.c` behind `#ifdef` guards and are disabled by default in `rules.mk`.
+
+### Practical notes
+
+- Corne includes explicit outer-column editing anchors as shown on the site.
+- Sweep stays intentionally minimal and does not inherit Corne-specific extra-column behaviour.
+- VIA enablement for Sweep can depend on target support in your QMK tree, so it is left commented in Sweep `rules.mk`.
+
 ## Supported Keyboards
 
 - `Corne v3 Choc` (3x6 + 3)
