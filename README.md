@@ -184,3 +184,11 @@ The implementation now follows the original Corne page approach more closely:
 - Corne layer labels and tooltips were tightened so high-value keys such as `Tab`, `[`, `]`, and `;` are explicit and easy to scan.
 - Sweep remains intentionally simpler than Corne, with fewer moving parts and the same Graphite core.
 - Combo guidance stays minimal and practical: `Esc`, `Tab`, `Delete`, plus optional `Caps Word` in QMK.
+
+## Visual QoL Polish Pass
+
+- Added a cleaner role-based visual system for alpha, home-row, thumb, hold-layer, editing-anchor, and combo-highlight keys.
+- Improved tap vs hold readability: tap labels are now stronger and larger, hold labels are secondary and compact.
+- Added subtle layer-aware shell tinting and an active-layer indicator to improve at-a-glance orientation.
+- Tightened spacing and control sizing so the keyboard remains the dominant, always-open reference element.
+- Added a lightweight dark-mode toggle for long sessions, with no layout logic changes.
