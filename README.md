@@ -211,8 +211,13 @@ The implementation now follows the original Corne page approach more closely:
 
 ## Practical QoL Features
 
-- Added `Learning Mode` toggle to make anchors, thumbs, home-row roles, and combo source keys easier to scan.
-- Added `Hold Emphasis` toggle to make hold-layer behaviour more explicit on tap-hold keys.
-- Added `Reset View` to return quickly to a known baseline (`Corne`, `Base`, light theme, combos off, learning off, hold emphasis off).
+- Added `Reset View` to return quickly to a known baseline (`Corne`, `Base`, light theme, combos off).
 - Added `Copy View Link` so current keyboard/layer/theme/toggle state can be shared or reopened directly.
 - View state is reflected in URL query parameters and restored on page load.
+
+## Typography and Styling Refinement
+
+- Upgraded typography with a cleaner premium sans stack (`Manrope` with sensible fallbacks) and clearer heading/metadata hierarchy.
+- Refined spacing rhythm, panel treatment, and controls for a more deliberate, less prototype-like feel.
+- Removed `Learning Mode` and `Hold Emphasis` controls to reduce clutter and keep the page keyboard-first.
+- Kept practical controls: keyboard selector, layer selector, dark/light, combos toggle, reset, and copy-view-link.

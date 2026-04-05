@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphite Split Keyboard Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script>
@@ -143,7 +146,7 @@
         }
 
         body {
-            font-family: "Inter", "Segoe UI", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            font-family: "Manrope", "Inter", "Segoe UI", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
             background:
                 radial-gradient(1200px 420px at 50% -120px, var(--page-bg-soft), transparent 72%),
                 radial-gradient(860px 300px at 12% 8%, rgba(124, 152, 201, 0.16), transparent 62%),
@@ -316,31 +319,6 @@
             box-shadow: inset 0 0 0 1px rgba(217, 147, 34, 0.25);
         }
 
-        .learning-home {
-            border-width: 2px;
-            box-shadow: 0 0 0 1px rgba(111, 157, 241, 0.35), inset 0 0 0 1px rgba(111, 157, 241, 0.18);
-        }
-
-        .learning-thumb {
-            border-width: 2px;
-            box-shadow: 0 0 0 1px rgba(82, 188, 133, 0.35), inset 0 0 0 1px rgba(82, 188, 133, 0.18);
-        }
-
-        .learning-anchor {
-            border-width: 2px;
-            box-shadow: 0 0 0 1px rgba(225, 161, 77, 0.4), inset 0 0 0 1px rgba(225, 161, 77, 0.2);
-        }
-
-        .hold-emphasis {
-            border-width: 2px;
-            box-shadow: 0 0 0 1px rgba(91, 149, 239, 0.45), inset 0 0 0 1px rgba(91, 149, 239, 0.22);
-        }
-
-        .combo-key.combo-focus {
-            border-style: solid;
-            box-shadow: 0 0 0 1px rgba(217, 147, 34, 0.45), inset 0 0 0 1px rgba(217, 147, 34, 0.28);
-        }
-
         .blank-key {
             background: transparent !important;
             border: 1px dashed var(--panel-border) !important;
@@ -372,7 +350,7 @@
             letter-spacing: 0.012em;
             line-height: 1.05;
             text-align: center;
-            font-family: "Inter", "Segoe UI", sans-serif;
+            font-family: "Manrope", "Inter", "Segoe UI", sans-serif;
         }
 
         @media (min-width: 1024px) {
@@ -467,6 +445,20 @@
             letter-spacing: 0.02em;
         }
 
+        .k-title {
+            letter-spacing: 0.012em;
+            font-weight: 800;
+        }
+
+        .k-subtitle {
+            font-weight: 600;
+        }
+
+        .k-section-title {
+            letter-spacing: 0.01em;
+            font-weight: 700;
+        }
+
         .control-btn:hover {
             background: var(--control-hover);
             border-color: var(--home-border);
@@ -501,8 +493,8 @@
 </head>
 <body class="p-2 sm:p-3">
     <div id="app" class="max-w-6xl mx-auto">
-        <h1 class="text-xl sm:text-3xl font-bold text-center mb-1" style="letter-spacing: 0.01em;">{{ config.title }}</h1>
-        <p class="text-center text-xs sm:text-sm mb-2.5" style="color: var(--muted-text); font-weight: 500;">{{ config.subtitle }}</p>
+        <h1 class="k-title text-xl sm:text-3xl text-center mb-1">{{ config.title }}</h1>
+        <p class="k-subtitle text-center text-xs sm:text-sm mb-2.5" style="color: var(--muted-text);">{{ config.subtitle }}</p>
 
         <div class="flex flex-wrap justify-center gap-1.5 mb-1.5">
             <button
@@ -539,19 +531,7 @@
                 {{ showCombos ? 'Combos On' : 'Combos Off' }}
             </button>
         </div>
-        <div class="flex flex-wrap justify-center gap-1.5 mb-2">
-            <button
-                @click="toggleLearningMode"
-                :class="['control-btn control-btn-sm', learningMode ? 'layer-active' : '']"
-            >
-                {{ learningMode ? 'Learning On' : 'Learning Off' }}
-            </button>
-            <button
-                @click="toggleHoldEmphasis"
-                :class="['control-btn control-btn-sm', holdEmphasis ? 'layer-active' : '']"
-            >
-                {{ holdEmphasis ? 'Hold Emphasis On' : 'Hold Emphasis Off' }}
-            </button>
+        <div class="flex flex-wrap justify-center gap-1.5 mb-2.5">
             <button
                 @click="resetView"
                 class="control-btn control-btn-sm"
@@ -567,7 +547,7 @@
         </div>
         <p class="text-center text-xs mb-2.5" style="color: var(--muted-text);">Active layer: <span class="font-semibold" style="color: var(--control-text); text-transform: uppercase;">{{ currentLayer }}</span></p>
 
-        <div :class="['keyboard-shell mb-2.5', `layer-shell-${currentLayer}`, learningMode ? 'learning-mode' : '']">
+        <div :class="['keyboard-shell mb-2.5', `layer-shell-${currentLayer}`]">
             <div class="board-wrap">
                 <div class="half-board">
                     <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'left-row-' + row">
@@ -625,14 +605,14 @@
         </div>
 
         <div class="panel p-2.5 mb-2.5">
-            <h3 class="font-semibold text-sm mb-1">Core Layout Behaviour</h3>
+            <h3 class="k-section-title text-sm mb-1">Core Layout Behaviour</h3>
             <p class="text-xs sm:text-sm mb-1" style="color: var(--muted-text);"><strong style="color: var(--control-text);">VIA-safe core:</strong> {{ selectedKeyboard.viaSafe }}</p>
             <p class="text-xs sm:text-sm" style="color: var(--muted-text);"><strong style="color: var(--control-text);">Optional QMK-only:</strong> {{ selectedKeyboard.qmkOnly }}</p>
         </div>
 
         <div v-show="showCombos" class="panel p-2.5 mb-1.5">
-            <h3 class="font-semibold text-sm mb-2">Combos (Optional QMK-only)</h3>
-            <p class="text-xs mb-2" style="color: var(--muted-text);">Combo source keys are highlighted on the Base layer{{ learningMode ? ' with stronger emphasis in Learning Mode' : '' }}.</p>
+            <h3 class="k-section-title text-sm mb-2">Combos (Optional QMK-only)</h3>
+            <p class="text-xs mb-2" style="color: var(--muted-text);">Combo source keys are highlighted on the Base layer.</p>
             <div class="space-y-1.5 text-xs sm:text-sm">
                 <div v-for="combo in selectedKeyboard.combos" :key="combo.keys.join('-')" class="flex items-center justify-between rounded px-2.5 py-1.5" style="background: var(--combo-row-bg);">
                     <span class="font-mono px-2 py-0.5 rounded" style="background: var(--anchor-bg); border: 1px solid var(--anchor-border);">{{ combo.keys.join(' + ') }}</span>
@@ -1650,8 +1630,6 @@
                     currentLayer: "base",
                     showCombos: false,
                     darkMode: false,
-                    learningMode: false,
-                    holdEmphasis: false,
                     copiedLink: false
                 };
             },
@@ -1707,8 +1685,6 @@
                     const layer = params.get("layer");
                     const theme = params.get("theme");
                     const combos = params.get("combos");
-                    const learn = params.get("learn");
-                    const hold = params.get("hold");
 
                     if (theme === "dark" || theme === "light") {
                         this.darkMode = theme === "dark";
@@ -1725,8 +1701,6 @@
                     }
 
                     this.showCombos = combos === "1";
-                    this.learningMode = learn === "1";
-                    this.holdEmphasis = hold === "1";
                 },
                 syncViewState() {
                     const params = new URLSearchParams();
@@ -1734,22 +1708,12 @@
                     params.set("layer", this.currentLayer);
                     params.set("theme", this.darkMode ? "dark" : "light");
                     if (this.showCombos) params.set("combos", "1");
-                    if (this.learningMode) params.set("learn", "1");
-                    if (this.holdEmphasis) params.set("hold", "1");
 
                     const next = `${window.location.pathname}?${params.toString()}`;
                     window.history.replaceState({}, "", next);
                 },
                 toggleCombos() {
                     this.showCombos = !this.showCombos;
-                    this.syncViewState();
-                },
-                toggleLearningMode() {
-                    this.learningMode = !this.learningMode;
-                    this.syncViewState();
-                },
-                toggleHoldEmphasis() {
-                    this.holdEmphasis = !this.holdEmphasis;
                     this.syncViewState();
                 },
                 resetView() {
@@ -1760,8 +1724,6 @@
                     }
                     this.darkMode = false;
                     this.showCombos = false;
-                    this.learningMode = false;
-                    this.holdEmphasis = false;
                     this.copiedLink = false;
                     this.applyTheme();
                     this.syncViewState();
@@ -1814,29 +1776,24 @@
 
                     if (key.class && key.class.includes("home-row")) {
                         classes.push("key-role-home");
-                        if (this.learningMode) classes.push("learning-home");
                     }
 
                     if (key.class && key.class.includes("thumb-key")) {
                         classes.push("key-role-thumb");
-                        if (this.learningMode) classes.push("learning-thumb");
                     }
 
                     const currentValue = (this.selectedKeyboard.layerData[this.currentLayer] || {})[key.id];
                     if (currentValue && typeof currentValue === "object" && currentValue.hold) {
                         classes.push("key-role-held");
-                        if (this.holdEmphasis || this.learningMode) classes.push("hold-emphasis");
                     }
 
                     const tapValue = typeof currentValue === "object" ? currentValue.tap : currentValue;
                     if (this.isEditingAnchor(tapValue)) {
                         classes.push("key-role-anchor");
-                        if (this.learningMode) classes.push("learning-anchor");
                     }
 
                     if (this.showCombos && this.currentLayer === "base" && key.class && key.class.includes("combo-key")) {
                         classes.push("combo-key");
-                        if (this.learningMode) classes.push("combo-focus");
                     }
 
                     if (!currentValue) {
