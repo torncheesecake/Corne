@@ -53,8 +53,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Optional QMK-only enhancements: minimal high-value combos.
 #ifdef COMBO_ENABLE
 enum combo_events {
-    CMB_ESC,
-    CMB_TAB,
     CMB_DEL,
 #ifdef CAPS_WORD_ENABLE
     CMB_CAPS_WORD,
@@ -62,16 +60,12 @@ enum combo_events {
     CMB_COUNT
 };
 
-const uint16_t PROGMEM cmb_esc[]       = {KC_R,    KC_T,    COMBO_END};
-const uint16_t PROGMEM cmb_tab[]       = {KC_H,    KC_A,    COMBO_END};
 const uint16_t PROGMEM cmb_del[]       = {KC_E,    KC_I,    COMBO_END};
 #ifdef CAPS_WORD_ENABLE
 const uint16_t PROGMEM cmb_caps_word[] = {LT(_NAV, KC_SPC), LT(_SYM, KC_ENT), COMBO_END};
 #endif
 
 combo_t key_combos[CMB_COUNT] = {
-    [CMB_ESC] = COMBO(cmb_esc, KC_ESC),
-    [CMB_TAB] = COMBO(cmb_tab, KC_TAB),
     [CMB_DEL] = COMBO(cmb_del, KC_DEL),
 #ifdef CAPS_WORD_ENABLE
     [CMB_CAPS_WORD] = COMBO(cmb_caps_word, QK_CAPS_WORD),

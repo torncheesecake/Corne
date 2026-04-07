@@ -185,7 +185,7 @@ The implementation now follows the original Corne page approach more closely:
 - Corne now uses the outer sixth column intentionally on Base (`Esc`, `Tab`, `` ` ``, `;`, `Bksp`, `Enter`, `Delete`) to reduce friction in daily use.
 - Corne layer labels and tooltips were tightened so high-value keys such as `Tab`, `[`, `]`, and `;` are explicit and easy to scan.
 - Sweep remains intentionally simpler than Corne, with fewer moving parts and the same Graphite core.
-- Combo guidance stays minimal and practical: `Esc`, `Tab`, `Delete`, plus optional `Caps Word` in QMK.
+- Combo guidance stays minimal and practical: `Delete` plus optional `Caps Word` in QMK.
 
 ## Visual QoL Polish Pass
 
@@ -225,3 +225,10 @@ The implementation now follows the original Corne page approach more closely:
 - Elevated keyboard prominence with a stronger shell silhouette, deeper contrast, and more dramatic framing.
 - Made controls more substantial and cohesive with grouped strips and clearer active states.
 - Removed low-value utility controls (`Reset View`, `Copy View Link`) to reduce clutter and keep focus on the keyboard.
+
+## Layout Refinement Update
+
+- Corne now leans on physical outer-column anchors for `Esc`, `Tab`, `` ` ``, `;`, `Bksp`, `Enter`, and `Delete`, reducing combo dependence.
+- Corne and Sweep combos were reduced to only `Delete` plus optional `Caps Word` (QMK-only).
+- Fn media labels were clarified with `Play/Pause` alongside `Vol+`, `Vol-`, and `Mute`.
+- Sweep remains intentionally minimal and less duplicated than Corne.

@@ -5,9 +5,9 @@
     {
       "id": "corne",
       "name": "Corne",
-      "description": "Corne v3 Choc (42-key, 3x6 + 3): Graphite core with outer columns used for editing anchors and lower layer churn",
+      "description": "Corne v3 Choc (42-key, 3x6 + 3): Graphite core with practical outer-column anchors and low-combo daily use",
       "viaSafe": "Base/Nav/Sym/Num/Fn with dedicated outer utility keys and thumb hold-layers.",
-      "qmkOnly": "Minimal combos plus optional Caps Word combo.",
+      "qmkOnly": "Optional Delete combo and Caps Word combo.",
       "layers": [
         {
           "id": "base",
@@ -78,12 +78,12 @@
           {
             "id": "L11",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "L12",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "L13",
@@ -170,12 +170,12 @@
           {
             "id": "R11",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "R12",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "R13",
@@ -478,7 +478,7 @@
           "R15": "Print",
           "R20": "",
           "R21": "Prev",
-          "R22": "Play",
+          "R22": "Play/Pause",
           "R23": "Next",
           "R24": "",
           "R25": "Pause",
@@ -506,27 +506,11 @@
       "combos": [
         {
           "keys": [
-            "N",
-            "R"
-          ],
-          "output": "Esc",
-          "note": "Quick cancel"
-        },
-        {
-          "keys": [
-            "H",
-            "A"
-          ],
-          "output": "Tab",
-          "note": "Focus switch"
-        },
-        {
-          "keys": [
             "E",
             "I"
           ],
           "output": "Delete",
-          "note": "Forward delete"
+          "note": "Forward delete without leaving base"
         },
         {
           "keys": [
@@ -541,9 +525,9 @@
     {
       "id": "sweep",
       "name": "Ferris Sweep",
-      "description": "Ferris Sweep (34-key, 3x5 + 2): compact Graphite setup with minimal moving parts",
+      "description": "Ferris Sweep (34-key, 3x5 + 2): compact Graphite setup with minimal layers and minimal combos",
       "viaSafe": "Base/Nav/Sym/Num/Fn with minimal thumb hold-layers.",
-      "qmkOnly": "Minimal combos plus optional Caps Word combo.",
+      "qmkOnly": "Optional Delete combo and Caps Word combo.",
       "layers": [
         {
           "id": "base",
@@ -609,12 +593,12 @@
           {
             "id": "SL11",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "SL12",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "SL13",
@@ -686,12 +670,12 @@
           {
             "id": "SR11",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "SR12",
             "row": 1,
-            "class": "bg-gray-100 home-row combo-key"
+            "class": "bg-gray-100 home-row"
           },
           {
             "id": "SR13",
@@ -934,7 +918,7 @@
           "SR13": "Vol+",
           "SR14": "",
           "SR20": "Prev",
-          "SR21": "Play",
+          "SR21": "Play/Pause",
           "SR22": "Next",
           "SR23": "",
           "SR24": "",
@@ -953,27 +937,11 @@
       "combos": [
         {
           "keys": [
-            "R",
-            "T"
-          ],
-          "output": "Esc",
-          "note": "Quick cancel"
-        },
-        {
-          "keys": [
-            "H",
-            "A"
-          ],
-          "output": "Tab",
-          "note": "Focus switch"
-        },
-        {
-          "keys": [
             "E",
             "I"
           ],
           "output": "Delete",
-          "note": "Forward delete"
+          "note": "Forward delete without layer change"
         },
         {
           "keys": [
