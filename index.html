@@ -498,34 +498,113 @@
 
         .layout-overview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(176px, 1fr));
-            gap: 0.6rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.65rem;
         }
 
         .layout-card {
             border: 1px solid var(--panel-border);
-            border-radius: 0.75rem;
+            border-radius: 0.82rem;
             background: var(--shell-bg);
             padding: 0.55rem;
-            font-size: 0.66rem;
-            line-height: 1.3;
+            box-shadow: 0 10px 18px -20px var(--shell-shadow);
         }
 
         .layout-card h4 {
-            font-size: 0.67rem;
+            font-size: 0.65rem;
             font-weight: 800;
-            margin-bottom: 0.32rem;
-            letter-spacing: 0.05em;
+            margin-bottom: 0.42rem;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
             color: var(--muted-text);
         }
 
-        .layout-row {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            white-space: pre;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .mini-shell {
+            border: 1px solid var(--shell-border);
+            border-radius: 0.68rem;
+            background: var(--panel-bg);
+            padding: 0.4rem;
+        }
+
+        .mini-board-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.58rem;
+            align-items: start;
+        }
+
+        .mini-half-board {
+            display: grid;
+            gap: 0.17rem;
+        }
+
+        .mini-row-grid {
+            display: grid;
+            gap: 0.17rem;
+        }
+
+        .mini-row-home {
+            margin-left: 0.2rem;
+        }
+
+        .mini-row-bottom {
+            margin-left: 0.4rem;
+        }
+
+        .mini-thumb-wrap {
+            margin-top: 0.22rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+        }
+
+        .mini-thumb-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.17rem;
+        }
+
+        .mini-key {
+            min-width: 1.33rem;
+            min-height: 1.33rem;
+            border-radius: 0.34rem;
+            border: 1px solid var(--alpha-border);
+            background: var(--alpha-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.02rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        }
+
+        .mini-thumb-key {
+            min-width: 1.8rem;
+        }
+
+        .mini-key-label {
+            font-size: 0.41rem;
+            line-height: 1.03;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.01em;
             color: var(--control-text);
+        }
+
+        .mini-mod-label {
+            display: block;
+            font-size: 0.33rem;
+            line-height: 1;
+            margin-top: 1px;
+            letter-spacing: 0.04em;
+            color: var(--muted-text);
+            text-transform: uppercase;
+        }
+
+        .mini-blank {
+            background: transparent !important;
+            border: 1px dashed var(--panel-border) !important;
+            box-shadow: none !important;
+            opacity: 0.45;
         }
 
         .yaml-block {
@@ -541,6 +620,18 @@
             white-space: pre;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
             color: var(--control-text);
+        }
+
+        @media (max-width: 1023px) {
+            .mini-board-wrap,
+            .mini-thumb-wrap {
+                grid-template-columns: 1fr;
+                gap: 0.35rem;
+            }
+            .mini-row-home,
+            .mini-row-bottom {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -650,15 +741,62 @@
         <div class="panel p-2.5 mb-2.5">
             <h3 class="k-section-title text-sm mb-2">Keymap Layouts</h3>
             <div class="layout-overview-grid">
-                <div v-for="layerCard in keymapLayerLayouts" :key="layerCard.id" class="layout-card">
-                    <h4>{{ layerCard.name }}</h4>
-                    <div class="layout-row">{{ layerCard.leftTop }}</div>
-                    <div class="layout-row">{{ layerCard.leftHome }}</div>
-                    <div class="layout-row">{{ layerCard.leftBottom }}</div>
-                    <div class="layout-row">{{ layerCard.rightTop }}</div>
-                    <div class="layout-row">{{ layerCard.rightHome }}</div>
-                    <div class="layout-row">{{ layerCard.rightBottom }}</div>
-                    <div class="layout-row">{{ layerCard.thumbs }}</div>
+                <div v-for="layer in selectedKeyboard.layers" :key="layer.id" class="layout-card">
+                    <h4>{{ layer.name }}</h4>
+                    <div class="mini-shell">
+                        <div class="mini-board-wrap">
+                            <div class="mini-half-board">
+                                <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'mini-left-row-' + layer.id + '-' + row">
+                                    <div
+                                        class="mini-row-grid"
+                                        :class="getMiniRowClass(row - 1)"
+                                        :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.leftCols}, minmax(0, 1fr))` }"
+                                    >
+                                        <div
+                                            v-for="key in getKeysForRow('left', row - 1)"
+                                            :key="'mini-' + layer.id + '-' + key.id"
+                                            :class="getMiniKeyClasses(key, layer.id)"
+                                            v-html="getMiniKeyContent(key.id, layer.id)"
+                                        ></div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="mini-half-board">
+                                <template v-for="row in selectedKeyboard.keyboardLayout.rows" :key="'mini-right-row-' + layer.id + '-' + row">
+                                    <div
+                                        class="mini-row-grid"
+                                        :class="getMiniRowClass(row - 1)"
+                                        :style="{ gridTemplateColumns: `repeat(${selectedKeyboard.keyboardLayout.rightCols}, minmax(0, 1fr))` }"
+                                    >
+                                        <div
+                                            v-for="key in getKeysForRow('right', row - 1)"
+                                            :key="'mini-' + layer.id + '-' + key.id"
+                                            :class="getMiniKeyClasses(key, layer.id)"
+                                            v-html="getMiniKeyContent(key.id, layer.id)"
+                                        ></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="mini-thumb-wrap">
+                            <div class="mini-thumb-row">
+                                <div
+                                    v-for="thumbKey in selectedKeyboard.keyboardLayout.leftThumbKeys"
+                                    :key="'mini-' + layer.id + '-' + thumbKey.id"
+                                    :class="getMiniKeyClasses(thumbKey, layer.id)"
+                                    v-html="getMiniKeyContent(thumbKey.id, layer.id)"
+                                ></div>
+                            </div>
+                            <div class="mini-thumb-row">
+                                <div
+                                    v-for="thumbKey in selectedKeyboard.keyboardLayout.rightThumbKeys"
+                                    :key="'mini-' + layer.id + '-' + thumbKey.id"
+                                    :class="getMiniKeyClasses(thumbKey, layer.id)"
+                                    v-html="getMiniKeyContent(thumbKey.id, layer.id)"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <details class="mt-2">
@@ -1667,28 +1805,6 @@
                 selectedKeyboard() {
                     return this.config.keyboards.find((kb) => kb.id === this.currentKeyboard) || { keyboardLayout: { rows: 3, leftCols: 6, rightCols: 6, leftKeys: [], rightKeys: [], leftThumbKeys: [], rightThumbKeys: [] }, layers: [], layerData: {}, tooltips: {}, combos: [], viaSafe: "", qmkOnly: "", description: "" };
                 },
-                keymapLayerLayouts() {
-                    const kb = this.selectedKeyboard;
-                    if (!kb.layers?.length) return [];
-                    return kb.layers.map((layer) => {
-                        const layerData = kb.layerData[layer.id] || {};
-                        const leftRows = [0, 1, 2].map((r) => this.formatRow(kb.keyboardLayout.leftKeys, r, layerData));
-                        const rightRows = [0, 1, 2].map((r) => this.formatRow(kb.keyboardLayout.rightKeys, r, layerData));
-                        const leftThumb = this.formatThumbs(kb.keyboardLayout.leftThumbKeys, layerData);
-                        const rightThumb = this.formatThumbs(kb.keyboardLayout.rightThumbKeys, layerData);
-                        return {
-                            id: layer.id,
-                            name: layer.name,
-                            leftTop: `L0 ${leftRows[0]}`,
-                            leftHome: `L1 ${leftRows[1]}`,
-                            leftBottom: `L2 ${leftRows[2]}`,
-                            rightTop: `R0 ${rightRows[0]}`,
-                            rightHome: `R1 ${rightRows[1]}`,
-                            rightBottom: `R2 ${rightRows[2]}`,
-                            thumbs: `TH ${leftThumb} | ${rightThumb}`
-                        };
-                    });
-                },
                 keymapYaml() {
                     const kb = this.selectedKeyboard;
                     if (!kb.layers?.length) return "";
@@ -1863,6 +1979,61 @@
 
                     return classes;
                 },
+                getMiniLayerRole(layerId) {
+                    const map = {
+                        nav: "key-layer-nav",
+                        sym: "key-layer-sym",
+                        num: "key-layer-num",
+                        fn: "key-layer-fn"
+                    };
+                    return map[layerId] || "";
+                },
+                getMiniKeyClasses(key, layerId) {
+                    const classes = ["mini-key", "key-role-alpha"];
+                    const roleClass = this.getMiniLayerRole(layerId);
+                    if (roleClass && layerId !== "base") {
+                        classes.push(roleClass);
+                    }
+                    if (key.class && key.class.includes("home-row")) {
+                        classes.push("key-role-home");
+                    }
+                    if (key.class && key.class.includes("thumb-key")) {
+                        classes.push("key-role-thumb", "mini-thumb-key");
+                    }
+                    const value = (this.selectedKeyboard.layerData[layerId] || {})[key.id];
+                    if (value && typeof value === "object" && value.hold) {
+                        classes.push("key-role-held");
+                    }
+                    const tapValue = typeof value === "object" ? value.tap : value;
+                    if (this.isEditingAnchor(tapValue)) {
+                        classes.push("key-role-anchor");
+                    }
+                    if (this.showCombos && layerId === "base" && key.class && key.class.includes("combo-key")) {
+                        classes.push("combo-key");
+                    }
+                    if (!value) {
+                        classes.push("mini-blank");
+                    }
+                    return classes;
+                },
+                getMiniKeyContent(keyId, layerId) {
+                    const layer = this.selectedKeyboard.layerData[layerId] || {};
+                    const value = layer[keyId];
+                    if (!value) {
+                        return '<span class="blank-placeholder" aria-hidden="true"></span>';
+                    }
+                    if (typeof value === "object") {
+                        const tap = value.tap || "";
+                        const hold = value.hold || "";
+                        return `<div class="mini-key-label">${tap}${hold ? `<span class="mini-mod-label">${hold}</span>` : ""}</div>`;
+                    }
+                    return `<span class="mini-key-label">${value}</span>`;
+                },
+                getMiniRowClass(rowIndex) {
+                    if (rowIndex === 1) return "mini-row-home";
+                    if (rowIndex === 2) return "mini-row-bottom";
+                    return "";
+                },
                 normaliseLabel(value) {
                     const map = {
                         "": "___",
@@ -1889,19 +2060,6 @@
                         return `${this.normaliseLabel(tap)}${hold}`;
                     }
                     return this.normaliseLabel(raw);
-                },
-                formatRow(keys, row, layerData) {
-                    return keys
-                        .filter((k) => k.row === row)
-                        .map((k) => this.getDisplayLabel(layerData[k.id] || ""))
-                        .map((v) => (v || "___").padEnd(6, " "))
-                        .join(" ");
-                },
-                formatThumbs(keys, layerData) {
-                    return keys
-                        .map((k) => this.getDisplayLabel(layerData[k.id] || ""))
-                        .map((v) => (v || "___").padEnd(8, " "))
-                        .join(" ");
                 },
                 toYamlValue(raw) {
                     const label = this.getDisplayLabel(raw);
