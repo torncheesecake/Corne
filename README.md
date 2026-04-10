@@ -212,6 +212,8 @@ The implementation now follows the original Corne page approach more closely:
 ## Practical QoL Features
 
 - View state is reflected in URL query parameters and restored on page load for keyboard, layer, theme, and combos visibility.
+- Added a compact per-layer keymap overview card set for each board, so all layer layouts are visible at once.
+- Added generated keymap-drawer-style YAML output for the currently selected board, sourced directly from the active JSON data.
 
 ## Typography and Styling Refinement
 

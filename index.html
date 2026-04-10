@@ -495,6 +495,53 @@
         .layer-shell-sym { background: var(--layer-shell-sym-bg); }
         .layer-shell-num { background: var(--layer-shell-num-bg); }
         .layer-shell-fn { background: var(--layer-shell-fn-bg); }
+
+        .layout-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(176px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .layout-card {
+            border: 1px solid var(--panel-border);
+            border-radius: 0.75rem;
+            background: var(--shell-bg);
+            padding: 0.55rem;
+            font-size: 0.66rem;
+            line-height: 1.3;
+        }
+
+        .layout-card h4 {
+            font-size: 0.67rem;
+            font-weight: 800;
+            margin-bottom: 0.32rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--muted-text);
+        }
+
+        .layout-row {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            white-space: pre;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--control-text);
+        }
+
+        .yaml-block {
+            margin-top: 0.5rem;
+            border: 1px solid var(--panel-border);
+            border-radius: 0.65rem;
+            background: var(--shell-bg);
+            padding: 0.6rem;
+            font-size: 0.65rem;
+            line-height: 1.32;
+            max-height: 19rem;
+            overflow: auto;
+            white-space: pre;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            color: var(--control-text);
+        }
     </style>
 </head>
 <body class="p-2 sm:p-3">
@@ -598,6 +645,26 @@
                     ></div>
                 </div>
             </div>
+        </div>
+
+        <div class="panel p-2.5 mb-2.5">
+            <h3 class="k-section-title text-sm mb-2">Keymap Layouts</h3>
+            <div class="layout-overview-grid">
+                <div v-for="layerCard in keymapLayerLayouts" :key="layerCard.id" class="layout-card">
+                    <h4>{{ layerCard.name }}</h4>
+                    <div class="layout-row">{{ layerCard.leftTop }}</div>
+                    <div class="layout-row">{{ layerCard.leftHome }}</div>
+                    <div class="layout-row">{{ layerCard.leftBottom }}</div>
+                    <div class="layout-row">{{ layerCard.rightTop }}</div>
+                    <div class="layout-row">{{ layerCard.rightHome }}</div>
+                    <div class="layout-row">{{ layerCard.rightBottom }}</div>
+                    <div class="layout-row">{{ layerCard.thumbs }}</div>
+                </div>
+            </div>
+            <details class="mt-2">
+                <summary class="text-xs sm:text-sm font-semibold cursor-pointer" style="color: var(--control-text);">keymap-drawer YAML (generated)</summary>
+                <pre class="yaml-block">{{ keymapYaml }}</pre>
+            </details>
         </div>
 
         <div class="panel p-2.5 mb-2.5">
@@ -1599,6 +1666,60 @@
             computed: {
                 selectedKeyboard() {
                     return this.config.keyboards.find((kb) => kb.id === this.currentKeyboard) || { keyboardLayout: { rows: 3, leftCols: 6, rightCols: 6, leftKeys: [], rightKeys: [], leftThumbKeys: [], rightThumbKeys: [] }, layers: [], layerData: {}, tooltips: {}, combos: [], viaSafe: "", qmkOnly: "", description: "" };
+                },
+                keymapLayerLayouts() {
+                    const kb = this.selectedKeyboard;
+                    if (!kb.layers?.length) return [];
+                    return kb.layers.map((layer) => {
+                        const layerData = kb.layerData[layer.id] || {};
+                        const leftRows = [0, 1, 2].map((r) => this.formatRow(kb.keyboardLayout.leftKeys, r, layerData));
+                        const rightRows = [0, 1, 2].map((r) => this.formatRow(kb.keyboardLayout.rightKeys, r, layerData));
+                        const leftThumb = this.formatThumbs(kb.keyboardLayout.leftThumbKeys, layerData);
+                        const rightThumb = this.formatThumbs(kb.keyboardLayout.rightThumbKeys, layerData);
+                        return {
+                            id: layer.id,
+                            name: layer.name,
+                            leftTop: `L0 ${leftRows[0]}`,
+                            leftHome: `L1 ${leftRows[1]}`,
+                            leftBottom: `L2 ${leftRows[2]}`,
+                            rightTop: `R0 ${rightRows[0]}`,
+                            rightHome: `R1 ${rightRows[1]}`,
+                            rightBottom: `R2 ${rightRows[2]}`,
+                            thumbs: `TH ${leftThumb} | ${rightThumb}`
+                        };
+                    });
+                },
+                keymapYaml() {
+                    const kb = this.selectedKeyboard;
+                    if (!kb.layers?.length) return "";
+                    const lines = [];
+                    lines.push(`layout:`);
+                    lines.push(`  title: "${this.config.title} - ${kb.name}"`);
+                    lines.push(`  boardsource: "Generated from app-keyboards-graphite.json"`);
+                    lines.push(`layers:`);
+                    kb.layers.forEach((layer) => {
+                        const layerData = kb.layerData[layer.id] || {};
+                        lines.push(`  ${layer.name}:`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.leftKeys, 0, layerData)}]`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.leftKeys, 1, layerData)}]`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.leftKeys, 2, layerData)}]`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.rightKeys, 0, layerData)}]`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.rightKeys, 1, layerData)}]`);
+                        lines.push(`    - [${this.toYamlRow(kb.keyboardLayout.rightKeys, 2, layerData)}]`);
+                        lines.push(`    - [${this.toYamlThumbs(kb.keyboardLayout.leftThumbKeys, layerData)}]`);
+                        lines.push(`    - [${this.toYamlThumbs(kb.keyboardLayout.rightThumbKeys, layerData)}]`);
+                    });
+                    if (kb.combos?.length) {
+                        lines.push(`combos:`);
+                        kb.combos.forEach((combo) => {
+                            lines.push(`  - p: [${combo.keys.map((k) => `"${k}"`).join(", ")}]`);
+                            lines.push(`    k: "${combo.output}"`);
+                            if (combo.note) {
+                                lines.push(`    l: "${combo.note.replace(/"/g, '\\"')}"`);
+                            }
+                        });
+                    }
+                    return lines.join("\n");
                 }
             },
             async mounted() {
@@ -1741,6 +1862,61 @@
                     }
 
                     return classes;
+                },
+                normaliseLabel(value) {
+                    const map = {
+                        "": "___",
+                        "PgUp": "PGUP",
+                        "PgDn": "PGDN",
+                        "Left": "LEFT",
+                        "Right": "RGHT",
+                        "Up": "UP",
+                        "Down": "DOWN",
+                        "Play/Pause": "PLY",
+                        "Bksp": "BSPC",
+                        "Backspace": "BSPC",
+                        "Delete": "DEL",
+                        "Enter": "ENT",
+                        "Space": "SPC"
+                    };
+                    return map[value] || String(value).toUpperCase();
+                },
+                getDisplayLabel(raw) {
+                    if (!raw) return "";
+                    if (typeof raw === "object") {
+                        const tap = raw.tap || "";
+                        const hold = raw.hold ? `/${raw.hold}` : "";
+                        return `${this.normaliseLabel(tap)}${hold}`;
+                    }
+                    return this.normaliseLabel(raw);
+                },
+                formatRow(keys, row, layerData) {
+                    return keys
+                        .filter((k) => k.row === row)
+                        .map((k) => this.getDisplayLabel(layerData[k.id] || ""))
+                        .map((v) => (v || "___").padEnd(6, " "))
+                        .join(" ");
+                },
+                formatThumbs(keys, layerData) {
+                    return keys
+                        .map((k) => this.getDisplayLabel(layerData[k.id] || ""))
+                        .map((v) => (v || "___").padEnd(8, " "))
+                        .join(" ");
+                },
+                toYamlValue(raw) {
+                    const label = this.getDisplayLabel(raw);
+                    return `"${label.replace(/"/g, '\\"') || "___"}"`;
+                },
+                toYamlRow(keys, row, layerData) {
+                    return keys
+                        .filter((k) => k.row === row)
+                        .map((k) => this.toYamlValue(layerData[k.id] || ""))
+                        .join(", ");
+                },
+                toYamlThumbs(keys, layerData) {
+                    return keys
+                        .map((k) => this.toYamlValue(layerData[k.id] || ""))
+                        .join(", ");
                 },
                 getKeyContent(keyId) {
                     const layer = this.selectedKeyboard.layerData[this.currentLayer] || {};
