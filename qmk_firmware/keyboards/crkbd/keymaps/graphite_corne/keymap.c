@@ -73,3 +73,67 @@ combo_t key_combos[CMB_COUNT] = {
 #endif
 };
 #endif
+
+#ifdef OLED_ENABLE
+static const char *layer_name(uint8_t layer) {
+    switch (layer) {
+        case _BASE:
+            return "BASE";
+        case _NAV:
+            return "NAV ";
+        case _SYM:
+            return "SYM ";
+        case _NUM:
+            return "NUM ";
+        case _FN:
+            return "FN  ";
+        default:
+            return "UNKN";
+    }
+}
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    oled_set_brightness(200);
+    return rotation;
+}
+
+bool oled_task_user(void) {
+    static uint8_t last_layer = 0xFF;
+    static led_t last_led_state = {0};
+
+    const uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
+    const led_t led_state       = host_keyboard_led_state();
+
+    if (current_layer == last_layer && led_state.raw == last_led_state.raw) {
+        return false;
+    }
+
+    last_layer     = current_layer;
+    last_led_state = led_state;
+
+    oled_clear();
+    oled_set_cursor(0, 0);
+    oled_write_ln_P(PSTR("GRAPHITE"), false);
+    oled_write_ln_P(PSTR("CORNE"), false);
+    oled_write_ln_P(PSTR(""), false);
+    oled_write_P(PSTR("LAYER "), false);
+    oled_write_ln(layer_name(current_layer), false);
+    oled_write_ln_P(PSTR(""), false);
+
+    oled_write_P(PSTR("CAP "), false);
+    if (led_state.caps_lock) {
+        oled_write_ln_P(PSTR("ON "), false);
+    } else {
+        oled_write_ln_P(PSTR("OFF"), false);
+    }
+
+    oled_write_P(PSTR("NUM "), false);
+    if (led_state.num_lock) {
+        oled_write_ln_P(PSTR("ON "), false);
+    } else {
+        oled_write_ln_P(PSTR("OFF"), false);
+    }
+
+    return false;
+}
+#endif
