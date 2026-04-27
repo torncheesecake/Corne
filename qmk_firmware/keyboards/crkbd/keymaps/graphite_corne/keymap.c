@@ -73,3 +73,72 @@ combo_t key_combos[CMB_COUNT] = {
 #endif
 };
 #endif
+
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    oled_set_brightness(200);
+    return rotation;
+}
+
+static void render_layer(uint8_t layer) {
+    oled_write_P(PSTR("LAYER "), false);
+    switch (layer) {
+        case _BASE:
+            oled_write_ln_P(PSTR("BASE"), true);
+            break;
+        case _NAV:
+            oled_write_ln_P(PSTR("NAV "), true);
+            break;
+        case _SYM:
+            oled_write_ln_P(PSTR("SYM "), true);
+            break;
+        case _NUM:
+            oled_write_ln_P(PSTR("NUM "), true);
+            break;
+        case _FN:
+            oled_write_ln_P(PSTR("FN  "), true);
+            break;
+        default:
+            oled_write_ln_P(PSTR("UNKN"), true);
+            break;
+    }
+}
+
+bool oled_task_user(void) {
+    const uint8_t layer = get_highest_layer(layer_state | default_layer_state);
+    const led_t leds = host_keyboard_led_state();
+
+    oled_clear();
+
+    if (!is_keyboard_master()) {
+        oled_set_cursor(0, 0);
+        oled_write_ln_P(PSTR("GRAPHITE"), false);
+        oled_write_ln_P(PSTR("CORNE"), false);
+        oled_write_ln_P(PSTR(""), false);
+        render_layer(layer);
+        return false;
+    }
+
+    oled_set_cursor(0, 0);
+    render_layer(layer);
+
+    oled_write_P(PSTR("CAP "), false);
+    oled_write_ln_P(leds.caps_lock ? PSTR("ON ") : PSTR("OFF"), false);
+
+    oled_write_P(PSTR("NUM "), false);
+    oled_write_ln_P(leds.num_lock ? PSTR("ON ") : PSTR("OFF"), false);
+
+#ifdef WPM_ENABLE
+    oled_write_P(PSTR("WPM "), false);
+    oled_write(get_u8_str(get_current_wpm(), ' '), false);
+    oled_write_ln_P(PSTR(""), false);
+#endif
+
+#ifdef RGB_MATRIX_ENABLE
+    oled_write_P(PSTR("RGB "), false);
+    oled_write_ln_P(rgb_matrix_is_enabled() ? PSTR("ON ") : PSTR("OFF"), false);
+#endif
+
+    return false;
+}
+#endif
