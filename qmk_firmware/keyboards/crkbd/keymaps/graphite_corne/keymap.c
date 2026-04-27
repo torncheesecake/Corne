@@ -111,11 +111,8 @@ bool oled_task_user(void) {
     oled_clear();
 
     if (!is_keyboard_master()) {
-        oled_set_cursor(0, 0);
+        oled_set_cursor(0, 2);
         oled_write_ln_P(PSTR("GRAPHITE"), false);
-        oled_write_ln_P(PSTR("CORNE"), false);
-        oled_write_ln_P(PSTR(""), false);
-        render_layer(layer);
         return false;
     }
 
