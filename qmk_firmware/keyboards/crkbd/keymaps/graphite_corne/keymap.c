@@ -75,23 +75,6 @@ combo_t key_combos[CMB_COUNT] = {
 #endif
 
 #ifdef OLED_ENABLE
-static const char *layer_name(uint8_t layer) {
-    switch (layer) {
-        case _BASE:
-            return "BASE";
-        case _NAV:
-            return "NAV ";
-        case _SYM:
-            return "SYM ";
-        case _NUM:
-            return "NUM ";
-        case _FN:
-            return "FN  ";
-        default:
-            return "UNKN";
-    }
-}
-
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     oled_set_brightness(255);
     return rotation;
@@ -112,7 +95,26 @@ bool oled_task_user(void) {
 
     oled_set_cursor(0, 0);
     oled_write_ln_P(PSTR("LAYER"), true);
-    oled_write_ln(layer_name(current_layer), true);
+    switch (current_layer) {
+        case _BASE:
+            oled_write_ln_P(PSTR("BASE "), true);
+            break;
+        case _NAV:
+            oled_write_ln_P(PSTR("NAV  "), true);
+            break;
+        case _SYM:
+            oled_write_ln_P(PSTR("SYM  "), true);
+            break;
+        case _NUM:
+            oled_write_ln_P(PSTR("NUM  "), true);
+            break;
+        case _FN:
+            oled_write_ln_P(PSTR("FN   "), true);
+            break;
+        default:
+            oled_write_ln_P(PSTR("UNKN "), true);
+            break;
+    }
     oled_write_ln_P(PSTR(""), false);
 
     oled_write_P(PSTR("CAP "), true);
