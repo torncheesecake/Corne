@@ -93,46 +93,32 @@ static const char *layer_name(uint8_t layer) {
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    oled_set_brightness(200);
+    oled_set_brightness(255);
     return rotation;
 }
 
 bool oled_task_user(void) {
-    static uint8_t last_layer = 0xFF;
-    static led_t last_led_state = {0};
-
     const uint8_t current_layer = get_highest_layer(layer_state | default_layer_state);
-    const led_t led_state       = host_keyboard_led_state();
+    const led_t led_state = host_keyboard_led_state();
+    oled_clear();
 
-    if (current_layer == last_layer && led_state.raw == last_led_state.raw) {
+    if (!is_keyboard_master()) {
+        oled_set_cursor(0, 1);
+        oled_write_ln_P(PSTR("GRAPH"), true);
+        oled_set_cursor(0, 3);
+        oled_write_ln_P(PSTR("CORNE"), true);
         return false;
     }
 
-    last_layer     = current_layer;
-    last_led_state = led_state;
-
-    oled_clear();
     oled_set_cursor(0, 0);
-    oled_write_ln_P(PSTR("GRAPHITE"), false);
-    oled_write_ln_P(PSTR("CORNE"), false);
-    oled_write_ln_P(PSTR(""), false);
-    oled_write_P(PSTR("LAYER "), false);
-    oled_write_ln(layer_name(current_layer), false);
+    oled_write_ln_P(PSTR("LAYER"), true);
+    oled_write_ln(layer_name(current_layer), true);
     oled_write_ln_P(PSTR(""), false);
 
-    oled_write_P(PSTR("CAP "), false);
-    if (led_state.caps_lock) {
-        oled_write_ln_P(PSTR("ON "), false);
-    } else {
-        oled_write_ln_P(PSTR("OFF"), false);
-    }
-
-    oled_write_P(PSTR("NUM "), false);
-    if (led_state.num_lock) {
-        oled_write_ln_P(PSTR("ON "), false);
-    } else {
-        oled_write_ln_P(PSTR("OFF"), false);
-    }
+    oled_write_P(PSTR("CAP "), true);
+    oled_write_ln_P(led_state.caps_lock ? PSTR("ON ") : PSTR("OFF"), true);
+    oled_write_P(PSTR("NUM "), true);
+    oled_write_ln_P(led_state.num_lock ? PSTR("ON ") : PSTR("OFF"), true);
 
     return false;
 }
