@@ -81,7 +81,6 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 static void render_layer(uint8_t layer) {
-    oled_write_P(PSTR("LAYER "), false);
     switch (layer) {
         case _BASE:
             oled_write_ln_P(PSTR("BASE"), true);
@@ -111,29 +110,32 @@ bool oled_task_user(void) {
     oled_clear();
 
     if (!is_keyboard_master()) {
-        oled_set_cursor(0, 2);
+        oled_set_cursor(0, 1);
         oled_write_ln_P(PSTR("GRAPHITE"), false);
         return false;
     }
 
     oled_set_cursor(0, 0);
+    oled_write_ln_P(PSTR("GRAPHITE"), false);
+
+    oled_set_cursor(0, 1);
     render_layer(layer);
 
+    oled_set_cursor(0, 2);
     oled_write_P(PSTR("CAP "), false);
-    oled_write_ln_P(leds.caps_lock ? PSTR("ON ") : PSTR("OFF"), false);
+    oled_write_P(leds.caps_lock ? PSTR("ON ") : PSTR("OFF"), false);
+    oled_write_P(PSTR(" NUM "), false);
+    oled_write_ln_P(leds.num_lock ? PSTR("ON") : PSTR("OFF"), false);
 
-    oled_write_P(PSTR("NUM "), false);
-    oled_write_ln_P(leds.num_lock ? PSTR("ON ") : PSTR("OFF"), false);
-
-#ifdef WPM_ENABLE
+    oled_set_cursor(0, 3);
     oled_write_P(PSTR("WPM "), false);
     oled_write(get_u8_str(get_current_wpm(), ' '), false);
-    oled_write_ln_P(PSTR(""), false);
-#endif
-
+    oled_write_P(PSTR(" "), false);
 #ifdef RGB_MATRIX_ENABLE
     oled_write_P(PSTR("RGB "), false);
     oled_write_ln_P(rgb_matrix_is_enabled() ? PSTR("ON ") : PSTR("OFF"), false);
+#else
+    oled_write_ln_P(PSTR(""), false);
 #endif
 
     return false;
