@@ -87,40 +87,40 @@ bool oled_task_user(void) {
 
     if (!is_keyboard_master()) {
         oled_set_cursor(0, 1);
-        oled_write_ln_P(PSTR("GRAPH"), true);
+        oled_write_ln_P(PSTR("GRAPH"), false);
         oled_set_cursor(0, 3);
-        oled_write_ln_P(PSTR("CORNE"), true);
+        oled_write_ln_P(PSTR("CORNE"), false);
         return false;
     }
 
     oled_set_cursor(0, 0);
-    oled_write_ln_P(PSTR("LAYER"), true);
+    oled_write_ln_P(PSTR("LAYER"), false);
     switch (current_layer) {
         case _BASE:
-            oled_write_ln_P(PSTR("BASE "), true);
+            oled_write_ln_P(PSTR("BASE "), false);
             break;
         case _NAV:
-            oled_write_ln_P(PSTR("NAV  "), true);
+            oled_write_ln_P(PSTR("NAV  "), false);
             break;
         case _SYM:
-            oled_write_ln_P(PSTR("SYM  "), true);
+            oled_write_ln_P(PSTR("SYM  "), false);
             break;
         case _NUM:
-            oled_write_ln_P(PSTR("NUM  "), true);
+            oled_write_ln_P(PSTR("NUM  "), false);
             break;
         case _FN:
-            oled_write_ln_P(PSTR("FN   "), true);
+            oled_write_ln_P(PSTR("FN   "), false);
             break;
         default:
-            oled_write_ln_P(PSTR("UNKN "), true);
+            oled_write_ln_P(PSTR("UNKN "), false);
             break;
     }
     oled_write_ln_P(PSTR(""), false);
 
-    oled_write_P(PSTR("CAP "), true);
-    oled_write_ln_P(led_state.caps_lock ? PSTR("ON ") : PSTR("OFF"), true);
-    oled_write_P(PSTR("NUM "), true);
-    oled_write_ln_P(led_state.num_lock ? PSTR("ON ") : PSTR("OFF"), true);
+    oled_write_P(PSTR("CAP "), false);
+    oled_write_ln_P(led_state.caps_lock ? PSTR("ON ") : PSTR("OFF"), false);
+    oled_write_P(PSTR("NUM "), false);
+    oled_write_ln_P(led_state.num_lock ? PSTR("ON ") : PSTR("OFF"), false);
 
     return false;
 }
