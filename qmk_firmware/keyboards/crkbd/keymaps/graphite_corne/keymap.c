@@ -83,22 +83,22 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 static void render_layer(uint8_t layer) {
     switch (layer) {
         case _BASE:
-            oled_write_ln_P(PSTR("BASE"), true);
+            oled_write_ln_P(PSTR("BASE "), false);
             break;
         case _NAV:
-            oled_write_ln_P(PSTR("NAV "), true);
+            oled_write_ln_P(PSTR("NAV  "), false);
             break;
         case _SYM:
-            oled_write_ln_P(PSTR("SYM "), true);
+            oled_write_ln_P(PSTR("SYM  "), false);
             break;
         case _NUM:
-            oled_write_ln_P(PSTR("NUM "), true);
+            oled_write_ln_P(PSTR("NUM  "), false);
             break;
         case _FN:
-            oled_write_ln_P(PSTR("FN  "), true);
+            oled_write_ln_P(PSTR("FN   "), false);
             break;
         default:
-            oled_write_ln_P(PSTR("UNKN"), true);
+            oled_write_ln_P(PSTR("UNKN "), false);
             break;
     }
 }
@@ -116,7 +116,7 @@ bool oled_task_user(void) {
     }
 
     oled_set_cursor(0, 0);
-    oled_write_ln_P(PSTR("GRAPHITE"), false);
+    oled_write_ln_P(PSTR("LAYER"), false);
 
     oled_set_cursor(0, 1);
     render_layer(layer);
