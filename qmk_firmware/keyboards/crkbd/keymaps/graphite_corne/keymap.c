@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include <string.h>
 
 enum layer_names {
     _BASE,
@@ -80,26 +81,69 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return rotation;
 }
 
-static void render_layer(uint8_t layer) {
+static void big_glyph(char c, uint8_t out[7]) {
+    memset(out, 0, 7);
+    switch (c) {
+        case 'A': { uint8_t t[7] = {0x04, 0x0A, 0x11, 0x1F, 0x11, 0x11, 0x11}; memcpy(out, t, 7); } break;
+        case 'B': { uint8_t t[7] = {0x1E, 0x11, 0x11, 0x1E, 0x11, 0x11, 0x1E}; memcpy(out, t, 7); } break;
+        case 'C': { uint8_t t[7] = {0x0E, 0x11, 0x10, 0x10, 0x10, 0x11, 0x0E}; memcpy(out, t, 7); } break;
+        case 'E': { uint8_t t[7] = {0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x1F}; memcpy(out, t, 7); } break;
+        case 'F': { uint8_t t[7] = {0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x10}; memcpy(out, t, 7); } break;
+        case 'G': { uint8_t t[7] = {0x0E, 0x11, 0x10, 0x17, 0x11, 0x11, 0x0E}; memcpy(out, t, 7); } break;
+        case 'H': { uint8_t t[7] = {0x11, 0x11, 0x11, 0x1F, 0x11, 0x11, 0x11}; memcpy(out, t, 7); } break;
+        case 'I': { uint8_t t[7] = {0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x0E}; memcpy(out, t, 7); } break;
+        case 'L': { uint8_t t[7] = {0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x1F}; memcpy(out, t, 7); } break;
+        case 'M': { uint8_t t[7] = {0x11, 0x1B, 0x15, 0x15, 0x11, 0x11, 0x11}; memcpy(out, t, 7); } break;
+        case 'N': { uint8_t t[7] = {0x11, 0x11, 0x19, 0x15, 0x13, 0x11, 0x11}; memcpy(out, t, 7); } break;
+        case 'O': { uint8_t t[7] = {0x0E, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E}; memcpy(out, t, 7); } break;
+        case 'P': { uint8_t t[7] = {0x1E, 0x11, 0x11, 0x1E, 0x10, 0x10, 0x10}; memcpy(out, t, 7); } break;
+        case 'R': { uint8_t t[7] = {0x1E, 0x11, 0x11, 0x1E, 0x14, 0x12, 0x11}; memcpy(out, t, 7); } break;
+        case 'S': { uint8_t t[7] = {0x0F, 0x10, 0x10, 0x0E, 0x01, 0x01, 0x1E}; memcpy(out, t, 7); } break;
+        case 'T': { uint8_t t[7] = {0x1F, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04}; memcpy(out, t, 7); } break;
+        case 'U': { uint8_t t[7] = {0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E}; memcpy(out, t, 7); } break;
+        case 'V': { uint8_t t[7] = {0x11, 0x11, 0x11, 0x11, 0x11, 0x0A, 0x04}; memcpy(out, t, 7); } break;
+        case 'Y': { uint8_t t[7] = {0x11, 0x11, 0x0A, 0x04, 0x04, 0x04, 0x04}; memcpy(out, t, 7); } break;
+        default: break;
+    }
+}
+
+static void draw_big_char(uint8_t x, uint8_t y, char c) {
+    uint8_t rows[7];
+    big_glyph(c, rows);
+    for (uint8_t r = 0; r < 7; r++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            bool on = (rows[r] >> (4 - col)) & 1;
+            if (!on) continue;
+            uint8_t px = x + (col * 2);
+            uint8_t py = y + (r * 2);
+            oled_write_pixel(px, py, true);
+            oled_write_pixel(px + 1, py, true);
+            oled_write_pixel(px, py + 1, true);
+            oled_write_pixel(px + 1, py + 1, true);
+        }
+    }
+}
+
+static void draw_big_text(uint8_t x, uint8_t y, const char *txt) {
+    while (*txt) {
+        if (*txt == ' ') {
+            x += 6;
+        } else {
+            draw_big_char(x, y, *txt);
+            x += 12;
+        }
+        txt++;
+    }
+}
+
+static const char *layer_text(uint8_t layer) {
     switch (layer) {
-        case _BASE:
-            oled_write_ln_P(PSTR("BASE "), false);
-            break;
-        case _NAV:
-            oled_write_ln_P(PSTR("NAV  "), false);
-            break;
-        case _SYM:
-            oled_write_ln_P(PSTR("SYM  "), false);
-            break;
-        case _NUM:
-            oled_write_ln_P(PSTR("NUM  "), false);
-            break;
-        case _FN:
-            oled_write_ln_P(PSTR("FN   "), false);
-            break;
-        default:
-            oled_write_ln_P(PSTR("UNKN "), false);
-            break;
+        case _BASE: return "BASE";
+        case _NAV:  return "NAV";
+        case _SYM:  return "SYM";
+        case _NUM:  return "NUM";
+        case _FN:   return "FN";
+        default:    return "UNKN";
     }
 }
 
@@ -110,16 +154,11 @@ bool oled_task_user(void) {
     oled_clear();
 
     if (!is_keyboard_master()) {
-        oled_set_cursor(0, 1);
-        oled_write_ln_P(PSTR("GRAPHITE"), false);
+        draw_big_text(4, 8, "GRAPHITE");
         return false;
     }
 
-    oled_set_cursor(0, 0);
-    oled_write_ln_P(PSTR("LAYER"), false);
-
-    oled_set_cursor(0, 1);
-    render_layer(layer);
+    draw_big_text(4, 0, layer_text(layer));
 
     oled_set_cursor(0, 2);
     oled_write_P(PSTR("CAP "), false);
