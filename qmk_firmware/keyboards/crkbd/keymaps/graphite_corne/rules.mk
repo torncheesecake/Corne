@@ -1,6 +1,4 @@
 VIA_ENABLE = yes
-OLED_ENABLE = yes
-WPM_ENABLE = yes
 
 # Optional QMK-only enhancements (off by default).
 # COMBO_ENABLE = yes
